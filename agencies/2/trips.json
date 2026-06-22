@@ -1,0 +1,2225 @@
+{
+  "_comment": "Auto-generated from Tranzy /trips API for agency_id=2",
+  "_generated": "2026-06-22T06:23:36.343Z",
+  "trips": [
+    {
+      "tripId": "1_0",
+      "routeId": 1,
+      "directionId": 0,
+      "headsign": "P-ța 1 Mai Sosire",
+      "shapeId": "1_0"
+    },
+    {
+      "tripId": "1_1",
+      "routeId": 1,
+      "directionId": 1,
+      "headsign": "Disp. Clăbucet",
+      "shapeId": "1_1"
+    },
+    {
+      "tripId": "2_0",
+      "routeId": 2,
+      "directionId": 0,
+      "headsign": "Disp. Tram CUG",
+      "shapeId": "2_0"
+    },
+    {
+      "tripId": "2_1",
+      "routeId": 2,
+      "directionId": 1,
+      "headsign": "P-ta Garii Noi",
+      "shapeId": "2_1"
+    },
+    {
+      "tripId": "3_0",
+      "routeId": 3,
+      "directionId": 0,
+      "headsign": "P-ta Garii Nord",
+      "shapeId": "3_0"
+    },
+    {
+      "tripId": "3_1",
+      "routeId": 3,
+      "directionId": 1,
+      "headsign": "Disp. Bucium",
+      "shapeId": "3_1"
+    },
+    {
+      "tripId": "4_0",
+      "routeId": 4,
+      "directionId": 0,
+      "headsign": "Disp. Tram CUG",
+      "shapeId": "4_0"
+    },
+    {
+      "tripId": "4_1",
+      "routeId": 4,
+      "directionId": 1,
+      "headsign": "Disp. Bucium",
+      "shapeId": "4_1"
+    },
+    {
+      "tripId": "5_0",
+      "routeId": 5,
+      "directionId": 0,
+      "headsign": "DEPOU Vest",
+      "shapeId": "5_0"
+    },
+    {
+      "tripId": "5_1",
+      "routeId": 5,
+      "directionId": 1,
+      "headsign": "Disp. Bucium",
+      "shapeId": "5_1"
+    },
+    {
+      "tripId": "6_0",
+      "routeId": 6,
+      "directionId": 0,
+      "headsign": "E.Quinet Sud",
+      "shapeId": "6_0"
+    },
+    {
+      "tripId": "6_1",
+      "routeId": 6,
+      "directionId": 1,
+      "headsign": "P-ța M. Viteazul Sud",
+      "shapeId": "6_1"
+    },
+    {
+      "tripId": "7_0",
+      "routeId": 7,
+      "directionId": 0,
+      "headsign": "Posada",
+      "shapeId": "7_0"
+    },
+    {
+      "tripId": "7_1",
+      "routeId": 7,
+      "directionId": 1,
+      "headsign": "Biserica Borhanci Vest",
+      "shapeId": "7_1"
+    },
+    {
+      "tripId": "8_0",
+      "routeId": 8,
+      "directionId": 0,
+      "headsign": "Dacia Service Sosire",
+      "shapeId": "8_0"
+    },
+    {
+      "tripId": "8_1",
+      "routeId": 8,
+      "directionId": 1,
+      "headsign": "P-ța M. Viteazul Vest",
+      "shapeId": "8_1"
+    },
+    {
+      "tripId": "9_0",
+      "routeId": 9,
+      "directionId": 0,
+      "headsign": "Boli Infectioase Sos",
+      "shapeId": "9_0"
+    },
+    {
+      "tripId": "9_1",
+      "routeId": 9,
+      "directionId": 1,
+      "headsign": "P-ta Garii Sos",
+      "shapeId": "9_1"
+    },
+    {
+      "tripId": "10_0",
+      "routeId": 10,
+      "directionId": 0,
+      "headsign": "ERS CUG Sud",
+      "shapeId": "10_0"
+    },
+    {
+      "tripId": "10_1",
+      "routeId": 10,
+      "directionId": 1,
+      "headsign": "I.P. Voitești",
+      "shapeId": "10_1"
+    },
+    {
+      "tripId": "12_0",
+      "routeId": 12,
+      "directionId": 0,
+      "headsign": "Disp. Bucium",
+      "shapeId": "12_0"
+    },
+    {
+      "tripId": "12_1",
+      "routeId": 12,
+      "directionId": 1,
+      "headsign": "Disp. Unirii",
+      "shapeId": "12_1"
+    },
+    {
+      "tripId": "13_0",
+      "routeId": 13,
+      "directionId": 0,
+      "headsign": "VIVO Sosire",
+      "shapeId": "13_0"
+    },
+    {
+      "tripId": "13_1",
+      "routeId": 13,
+      "directionId": 1,
+      "headsign": "Disp. Unirii",
+      "shapeId": "13_1"
+    },
+    {
+      "tripId": "14_0",
+      "routeId": 14,
+      "directionId": 0,
+      "headsign": "Snagov Nord",
+      "shapeId": "14_0"
+    },
+    {
+      "tripId": "14_1",
+      "routeId": 14,
+      "directionId": 1,
+      "headsign": "Disp. Clabucet",
+      "shapeId": "14_1"
+    },
+    {
+      "tripId": "15_0",
+      "routeId": 15,
+      "directionId": 0,
+      "headsign": "Disp. Unirii",
+      "shapeId": "15_0"
+    },
+    {
+      "tripId": "15_1",
+      "routeId": 15,
+      "directionId": 1,
+      "headsign": "Disp. Bucium",
+      "shapeId": "15_1"
+    },
+    {
+      "tripId": "16_0",
+      "routeId": 16,
+      "directionId": 0,
+      "headsign": "ERS CUG S.",
+      "shapeId": "16_0"
+    },
+    {
+      "tripId": "16_1",
+      "routeId": 16,
+      "directionId": 1,
+      "headsign": "Disp. Grigorescu",
+      "shapeId": "16_1"
+    },
+    {
+      "tripId": "17_0",
+      "routeId": 17,
+      "directionId": 0,
+      "headsign": "Emerson Sosire",
+      "shapeId": "17_0"
+    },
+    {
+      "tripId": "17_1",
+      "routeId": 17,
+      "directionId": 1,
+      "headsign": "Disp. Grigorescu",
+      "shapeId": "17_1"
+    },
+    {
+      "tripId": "18_0",
+      "routeId": 18,
+      "directionId": 0,
+      "headsign": "P-ța Gării Sosire",
+      "shapeId": "18_0"
+    },
+    {
+      "tripId": "18_1",
+      "routeId": 18,
+      "directionId": 1,
+      "headsign": "Disp. Grigorescu",
+      "shapeId": "18_1"
+    },
+    {
+      "tripId": "19_0",
+      "routeId": 19,
+      "directionId": 0,
+      "headsign": "P-ța M.Viteazu Sosire",
+      "shapeId": "19_0"
+    },
+    {
+      "tripId": "19_1",
+      "routeId": 19,
+      "directionId": 1,
+      "headsign": "Disp. Grigorescu",
+      "shapeId": "19_1"
+    },
+    {
+      "tripId": "20_0",
+      "routeId": 20,
+      "directionId": 0,
+      "headsign": "P-ța M.Viteazu Sosire",
+      "shapeId": "20_0"
+    },
+    {
+      "tripId": "20_1",
+      "routeId": 20,
+      "directionId": 1,
+      "headsign": "VIVO Sosire",
+      "shapeId": "20_1"
+    },
+    {
+      "tripId": "21_0",
+      "routeId": 21,
+      "directionId": 0,
+      "headsign": "Henri Barbusse Sosire",
+      "shapeId": "21_0"
+    },
+    {
+      "tripId": "21_1",
+      "routeId": 21,
+      "directionId": 1,
+      "headsign": "Roata Faget Sosire",
+      "shapeId": "21_1"
+    },
+    {
+      "tripId": "22_0",
+      "routeId": 22,
+      "directionId": 0,
+      "headsign": "P-ta Garii Sos",
+      "shapeId": "22_0"
+    },
+    {
+      "tripId": "22_1",
+      "routeId": 22,
+      "directionId": 1,
+      "headsign": "Disp. Unirii",
+      "shapeId": "22_1"
+    },
+    {
+      "tripId": "23_0",
+      "routeId": 23,
+      "directionId": 0,
+      "headsign": "Disp. IRA",
+      "shapeId": "23_0"
+    },
+    {
+      "tripId": "23_1",
+      "routeId": 23,
+      "directionId": 1,
+      "headsign": "Disp. Grigorescu",
+      "shapeId": "23_1"
+    },
+    {
+      "tripId": "24_0",
+      "routeId": 24,
+      "directionId": 0,
+      "headsign": "Napolact Sos",
+      "shapeId": "24_0"
+    },
+    {
+      "tripId": "24_1",
+      "routeId": 24,
+      "directionId": 1,
+      "headsign": "Piața Mihai Viteazul Est Sosire",
+      "shapeId": "24_1"
+    },
+    {
+      "tripId": "25_0",
+      "routeId": 25,
+      "directionId": 0,
+      "headsign": "PMV 2 Sos",
+      "shapeId": "25_0"
+    },
+    {
+      "tripId": "25_1",
+      "routeId": 25,
+      "directionId": 1,
+      "headsign": "Disp. Alverna",
+      "shapeId": "25_1"
+    },
+    {
+      "tripId": "26_0",
+      "routeId": 26,
+      "directionId": 0,
+      "headsign": "P-ta Garii Sos",
+      "shapeId": "26_0"
+    },
+    {
+      "tripId": "26_1",
+      "routeId": 26,
+      "directionId": 1,
+      "headsign": "Disp. Alverna",
+      "shapeId": "26_1"
+    },
+    {
+      "tripId": "27_0",
+      "routeId": 27,
+      "directionId": 0,
+      "headsign": "P-ta M. Viteazul Vest",
+      "shapeId": "27_0"
+    },
+    {
+      "tripId": "27_1",
+      "routeId": 27,
+      "directionId": 1,
+      "headsign": "Baisoara Sos",
+      "shapeId": "27_1"
+    },
+    {
+      "tripId": "28_0",
+      "routeId": 28,
+      "directionId": 0,
+      "headsign": "P-ța Gării Sosire",
+      "shapeId": "28_0"
+    },
+    {
+      "tripId": "28_1",
+      "routeId": 28,
+      "directionId": 1,
+      "headsign": "Băișoara Sosire",
+      "shapeId": "28_1"
+    },
+    {
+      "tripId": "29_0",
+      "routeId": 29,
+      "directionId": 0,
+      "headsign": "P-ta Garii Sos",
+      "shapeId": "29_0"
+    },
+    {
+      "tripId": "29_1",
+      "routeId": 29,
+      "directionId": 1,
+      "headsign": "Disp. Zorilor",
+      "shapeId": "29_1"
+    },
+    {
+      "tripId": "30_0",
+      "routeId": 30,
+      "directionId": 0,
+      "headsign": "I. Ionescu Sos.",
+      "shapeId": "30_0"
+    },
+    {
+      "tripId": "30_1",
+      "routeId": 30,
+      "directionId": 1,
+      "headsign": "P-ta M. Viteazul Vest",
+      "shapeId": "30_1"
+    },
+    {
+      "tripId": "31_0",
+      "routeId": 31,
+      "directionId": 0,
+      "headsign": "Emerson Sosire",
+      "shapeId": "31_0"
+    },
+    {
+      "tripId": "31_1",
+      "routeId": 31,
+      "directionId": 1,
+      "headsign": "P-ța M. Viteazul Vest",
+      "shapeId": "31_1"
+    },
+    {
+      "tripId": "32_0",
+      "routeId": 32,
+      "directionId": 0,
+      "headsign": "Tetarom Vest",
+      "shapeId": "32_0"
+    },
+    {
+      "tripId": "32_1",
+      "routeId": 32,
+      "directionId": 1,
+      "headsign": "Piața Mihai Viteazul Est Sosire",
+      "shapeId": "32_1"
+    },
+    {
+      "tripId": "33_0",
+      "routeId": 33,
+      "directionId": 0,
+      "headsign": "Vanatorului Sos.",
+      "shapeId": "33_0"
+    },
+    {
+      "tripId": "33_1",
+      "routeId": 33,
+      "directionId": 1,
+      "headsign": "Piața Mihai Viteazul Est Sosire",
+      "shapeId": "33_1"
+    },
+    {
+      "tripId": "34_0",
+      "routeId": 34,
+      "directionId": 0,
+      "headsign": "Valea Chintăului",
+      "shapeId": "34_0"
+    },
+    {
+      "tripId": "34_1",
+      "routeId": 34,
+      "directionId": 1,
+      "headsign": "Piața Mihai Viteazul Est Sosire",
+      "shapeId": "34_1"
+    },
+    {
+      "tripId": "35_0",
+      "routeId": 35,
+      "directionId": 0,
+      "headsign": "Cătun Vest",
+      "shapeId": "35_0"
+    },
+    {
+      "tripId": "35_1",
+      "routeId": 35,
+      "directionId": 1,
+      "headsign": "Piața Mihai Viteazul Est Sosire",
+      "shapeId": "35_1"
+    },
+    {
+      "tripId": "36_0",
+      "routeId": 36,
+      "directionId": 0,
+      "headsign": "P-ta Garii Sos",
+      "shapeId": "36_0"
+    },
+    {
+      "tripId": "36_1",
+      "routeId": 36,
+      "directionId": 1,
+      "headsign": "Disp. IRA",
+      "shapeId": "36_1"
+    },
+    {
+      "tripId": "37_0",
+      "routeId": 37,
+      "directionId": 0,
+      "headsign": "Vila Tusa Sosire",
+      "shapeId": "37_0"
+    },
+    {
+      "tripId": "37_1",
+      "routeId": 37,
+      "directionId": 1,
+      "headsign": "Posada",
+      "shapeId": "37_1"
+    },
+    {
+      "tripId": "38_0",
+      "routeId": 38,
+      "directionId": 0,
+      "headsign": "Dacia Service Sosire",
+      "shapeId": "38_0"
+    },
+    {
+      "tripId": "38_1",
+      "routeId": 38,
+      "directionId": 1,
+      "headsign": "Posada",
+      "shapeId": "38_1"
+    },
+    {
+      "tripId": "39_0",
+      "routeId": 39,
+      "directionId": 0,
+      "headsign": "P-ța 1 Mai Sosire",
+      "shapeId": "39_0"
+    },
+    {
+      "tripId": "39_1",
+      "routeId": 39,
+      "directionId": 1,
+      "headsign": "Disp. Grigorescu",
+      "shapeId": "39_1"
+    },
+    {
+      "tripId": "40_0",
+      "routeId": 40,
+      "directionId": 0,
+      "headsign": "Biserica Campului",
+      "shapeId": "40_0"
+    },
+    {
+      "tripId": "40_1",
+      "routeId": 40,
+      "directionId": 1,
+      "headsign": "P-ta M.Viteazu Sos",
+      "shapeId": "40_1"
+    },
+    {
+      "tripId": "41_0",
+      "routeId": 41,
+      "directionId": 0,
+      "headsign": "Observatorului Sud",
+      "shapeId": "41_0"
+    },
+    {
+      "tripId": "41_1",
+      "routeId": 41,
+      "directionId": 1,
+      "headsign": "Disp. Grigorescu",
+      "shapeId": "41_1"
+    },
+    {
+      "tripId": "42_0",
+      "routeId": 42,
+      "directionId": 0,
+      "headsign": "Dacia Service Sosire",
+      "shapeId": "42_0"
+    },
+    {
+      "tripId": "42_1",
+      "routeId": 42,
+      "directionId": 1,
+      "headsign": "Disp. Grigorescu",
+      "shapeId": "42_1"
+    },
+    {
+      "tripId": "43_0",
+      "routeId": 43,
+      "directionId": 0,
+      "headsign": "Observatorului Sud",
+      "shapeId": "43_0"
+    },
+    {
+      "tripId": "43_1",
+      "routeId": 43,
+      "directionId": 1,
+      "headsign": "VIVO Sosire",
+      "shapeId": "43_1"
+    },
+    {
+      "tripId": "44_0",
+      "routeId": 44,
+      "directionId": 0,
+      "headsign": "Teatru",
+      "shapeId": "44_0"
+    },
+    {
+      "tripId": "44_1",
+      "routeId": 44,
+      "directionId": 1,
+      "headsign": "Luminii",
+      "shapeId": "44_1"
+    },
+    {
+      "tripId": "45_0",
+      "routeId": 45,
+      "directionId": 0,
+      "headsign": "Disp. IRA",
+      "shapeId": "45_0"
+    },
+    {
+      "tripId": "45_1",
+      "routeId": 45,
+      "directionId": 1,
+      "headsign": "Disp. Zorilor",
+      "shapeId": "45_1"
+    },
+    {
+      "tripId": "46_0",
+      "routeId": 46,
+      "directionId": 0,
+      "headsign": "Disp. IRA",
+      "shapeId": "46_0"
+    },
+    {
+      "tripId": "46_1",
+      "routeId": 46,
+      "directionId": 1,
+      "headsign": "P-ța M. Viteazul Sud",
+      "shapeId": "46_1"
+    },
+    {
+      "tripId": "47_0",
+      "routeId": 47,
+      "directionId": 0,
+      "headsign": "ERS CUG S.",
+      "shapeId": "47_0"
+    },
+    {
+      "tripId": "47_1",
+      "routeId": 47,
+      "directionId": 1,
+      "headsign": "Baisoara Sos",
+      "shapeId": "47_1"
+    },
+    {
+      "tripId": "48_0",
+      "routeId": 48,
+      "directionId": 0,
+      "headsign": "Emerson Sos.",
+      "shapeId": "48_0"
+    },
+    {
+      "tripId": "48_1",
+      "routeId": 48,
+      "directionId": 1,
+      "headsign": "Baisoara Sos",
+      "shapeId": "48_1"
+    },
+    {
+      "tripId": "49_0",
+      "routeId": 49,
+      "directionId": 0,
+      "headsign": "Electromontaj Sud",
+      "shapeId": "49_0"
+    },
+    {
+      "tripId": "49_1",
+      "routeId": 49,
+      "directionId": 1,
+      "headsign": "P-ța Gării Sosire",
+      "shapeId": "49_1"
+    },
+    {
+      "tripId": "50_0",
+      "routeId": 50,
+      "directionId": 0,
+      "headsign": "ERS CUG S.",
+      "shapeId": "50_0"
+    },
+    {
+      "tripId": "50_1",
+      "routeId": 50,
+      "directionId": 1,
+      "headsign": "Disp. Zorilor",
+      "shapeId": "50_1"
+    },
+    {
+      "tripId": "51_0",
+      "routeId": 51,
+      "directionId": 0,
+      "headsign": "Emerson Sos.",
+      "shapeId": "51_0"
+    },
+    {
+      "tripId": "51_1",
+      "routeId": 51,
+      "directionId": 1,
+      "headsign": "Disp. Zorilor",
+      "shapeId": "51_1"
+    },
+    {
+      "tripId": "52_0",
+      "routeId": 52,
+      "directionId": 0,
+      "headsign": "Timișului Sosire",
+      "shapeId": "52_0"
+    },
+    {
+      "tripId": "52_1",
+      "routeId": 52,
+      "directionId": 1,
+      "headsign": "Disp. Bucium",
+      "shapeId": "52_1"
+    },
+    {
+      "tripId": "53_0",
+      "routeId": 53,
+      "directionId": 0,
+      "headsign": "Disp. IRA",
+      "shapeId": "53_0"
+    },
+    {
+      "tripId": "53_1",
+      "routeId": 53,
+      "directionId": 1,
+      "headsign": "Disp. Clabucet",
+      "shapeId": "53_1"
+    },
+    {
+      "tripId": "54_0",
+      "routeId": 54,
+      "directionId": 0,
+      "headsign": "Izlazului",
+      "shapeId": "54_0"
+    },
+    {
+      "tripId": "54_1",
+      "routeId": 54,
+      "directionId": 1,
+      "headsign": "Disp. IRA",
+      "shapeId": "54_1"
+    },
+    {
+      "tripId": "55_0",
+      "routeId": 55,
+      "directionId": 0,
+      "headsign": "Electromontaj Sud",
+      "shapeId": "55_0"
+    },
+    {
+      "tripId": "55_1",
+      "routeId": 55,
+      "directionId": 1,
+      "headsign": "P-ța M. Viteazul Sud",
+      "shapeId": "55_1"
+    },
+    {
+      "tripId": "56_0",
+      "routeId": 56,
+      "directionId": 0,
+      "headsign": "Piața AGRO Sosire",
+      "shapeId": "56_0"
+    },
+    {
+      "tripId": "56_1",
+      "routeId": 56,
+      "directionId": 1,
+      "headsign": "Arte Plastice",
+      "shapeId": "56_1"
+    },
+    {
+      "tripId": "57_0",
+      "routeId": 57,
+      "directionId": 0,
+      "headsign": "VIVO Sosire",
+      "shapeId": "57_0"
+    },
+    {
+      "tripId": "57_1",
+      "routeId": 57,
+      "directionId": 1,
+      "headsign": "Disp. Bucium",
+      "shapeId": "57_1"
+    },
+    {
+      "tripId": "58_0",
+      "routeId": 58,
+      "directionId": 0,
+      "headsign": "P-ta Garii Sos",
+      "shapeId": "58_0"
+    },
+    {
+      "tripId": "58_1",
+      "routeId": 58,
+      "directionId": 1,
+      "headsign": "Disp. Bucium",
+      "shapeId": "58_1"
+    },
+    {
+      "tripId": "59_0",
+      "routeId": 59,
+      "directionId": 0,
+      "headsign": "M-Releu Sosire",
+      "shapeId": "59_0"
+    },
+    {
+      "tripId": "59_1",
+      "routeId": 59,
+      "directionId": 1,
+      "headsign": "Posada",
+      "shapeId": "59_1"
+    },
+    {
+      "tripId": "60_0",
+      "routeId": 60,
+      "directionId": 0,
+      "headsign": "M-Biserica Vâlcele Sos",
+      "shapeId": "60_0"
+    },
+    {
+      "tripId": "60_1",
+      "routeId": 60,
+      "directionId": 1,
+      "headsign": "Posada",
+      "shapeId": "60_1"
+    },
+    {
+      "tripId": "61_0",
+      "routeId": 61,
+      "directionId": 0,
+      "headsign": "M-Școala Gheorgheni S",
+      "shapeId": "61_0"
+    },
+    {
+      "tripId": "61_1",
+      "routeId": 61,
+      "directionId": 1,
+      "headsign": "Posada",
+      "shapeId": "61_1"
+    },
+    {
+      "tripId": "62_0",
+      "routeId": 62,
+      "directionId": 0,
+      "headsign": "M-Primăria Ciurila",
+      "shapeId": "62_0"
+    },
+    {
+      "tripId": "62_1",
+      "routeId": 62,
+      "directionId": 1,
+      "headsign": "Posada",
+      "shapeId": "62_1"
+    },
+    {
+      "tripId": "63_0",
+      "routeId": 63,
+      "directionId": 0,
+      "headsign": "M-Str. Retezat",
+      "shapeId": "63_0"
+    },
+    {
+      "tripId": "63_1",
+      "routeId": 63,
+      "directionId": 1,
+      "headsign": "Disp. Bucium",
+      "shapeId": "63_1"
+    },
+    {
+      "tripId": "64_0",
+      "routeId": 64,
+      "directionId": 0,
+      "headsign": "M-Sesu de Sus Sosire",
+      "shapeId": "64_0"
+    },
+    {
+      "tripId": "64_1",
+      "routeId": 64,
+      "directionId": 1,
+      "headsign": "Disp. Bucium",
+      "shapeId": "64_1"
+    },
+    {
+      "tripId": "65_0",
+      "routeId": 65,
+      "directionId": 0,
+      "headsign": "M-Bis. Ortodoxa Sos(Luna)",
+      "shapeId": "65_0"
+    },
+    {
+      "tripId": "65_1",
+      "routeId": 65,
+      "directionId": 1,
+      "headsign": "Calvaria Auto Sos.",
+      "shapeId": "65_1"
+    },
+    {
+      "tripId": "66_0",
+      "routeId": 66,
+      "directionId": 0,
+      "headsign": "M-Urbano Floresti",
+      "shapeId": "66_0"
+    },
+    {
+      "tripId": "66_1",
+      "routeId": 66,
+      "directionId": 1,
+      "headsign": "P-ța Flora",
+      "shapeId": "66_1"
+    },
+    {
+      "tripId": "67_0",
+      "routeId": 67,
+      "directionId": 0,
+      "headsign": "M-Tăuți Sosire",
+      "shapeId": "67_0"
+    },
+    {
+      "tripId": "67_1",
+      "routeId": 67,
+      "directionId": 1,
+      "headsign": "Disp. Bucium",
+      "shapeId": "67_1"
+    },
+    {
+      "tripId": "68_0",
+      "routeId": 68,
+      "directionId": 0,
+      "headsign": "M-Str. Retezat",
+      "shapeId": "68_0"
+    },
+    {
+      "tripId": "68_1",
+      "routeId": 68,
+      "directionId": 1,
+      "headsign": "Aleea Stadionului",
+      "shapeId": "68_1"
+    },
+    {
+      "tripId": "69_0",
+      "routeId": 69,
+      "directionId": 0,
+      "headsign": "M-Complex Baciu Sos",
+      "shapeId": "69_0"
+    },
+    {
+      "tripId": "69_1",
+      "routeId": 69,
+      "directionId": 1,
+      "headsign": "Piața Mihai Viteazul Est Sosire",
+      "shapeId": "69_1"
+    },
+    {
+      "tripId": "70_0",
+      "routeId": 70,
+      "directionId": 0,
+      "headsign": "M-Suceagu ",
+      "shapeId": "70_0"
+    },
+    {
+      "tripId": "70_1",
+      "routeId": 70,
+      "directionId": 1,
+      "headsign": "Gara Mică Sosire",
+      "shapeId": "70_1"
+    },
+    {
+      "tripId": "71_0",
+      "routeId": 71,
+      "directionId": 0,
+      "headsign": "M-Salistea Noua Sos",
+      "shapeId": "71_0"
+    },
+    {
+      "tripId": "71_1",
+      "routeId": 71,
+      "directionId": 1,
+      "headsign": "Gara Mica Sos.",
+      "shapeId": "71_1"
+    },
+    {
+      "tripId": "72_0",
+      "routeId": 72,
+      "directionId": 0,
+      "headsign": "M - Teren Fotbal Mera",
+      "shapeId": "72_0"
+    },
+    {
+      "tripId": "72_1",
+      "routeId": 72,
+      "directionId": 1,
+      "headsign": "Gara Mică Sosire",
+      "shapeId": "72_1"
+    },
+    {
+      "tripId": "73_0",
+      "routeId": 73,
+      "directionId": 0,
+      "headsign": "M-Monument Popesti Sos",
+      "shapeId": "73_0"
+    },
+    {
+      "tripId": "73_1",
+      "routeId": 73,
+      "directionId": 1,
+      "headsign": "Gara Mica Sos.",
+      "shapeId": "73_1"
+    },
+    {
+      "tripId": "74_0",
+      "routeId": 74,
+      "directionId": 0,
+      "headsign": "M-Feiurdeni Sos",
+      "shapeId": "74_0"
+    },
+    {
+      "tripId": "74_1",
+      "routeId": 74,
+      "directionId": 1,
+      "headsign": "Gara Mica Sos.",
+      "shapeId": "74_1"
+    },
+    {
+      "tripId": "75_0",
+      "routeId": 75,
+      "directionId": 0,
+      "headsign": "M-Macicasu",
+      "shapeId": "75_0"
+    },
+    {
+      "tripId": "75_1",
+      "routeId": 75,
+      "directionId": 1,
+      "headsign": "Gara Mică Sosire",
+      "shapeId": "75_1"
+    },
+    {
+      "tripId": "76_0",
+      "routeId": 76,
+      "directionId": 0,
+      "headsign": "M-Chinteni Lac Sosire",
+      "shapeId": "76_0"
+    },
+    {
+      "tripId": "76_1",
+      "routeId": 76,
+      "directionId": 1,
+      "headsign": "Gara Mică Sosire",
+      "shapeId": "76_1"
+    },
+    {
+      "tripId": "77_0",
+      "routeId": 77,
+      "directionId": 0,
+      "headsign": "M-Vechea N",
+      "shapeId": "77_0"
+    },
+    {
+      "tripId": "77_1",
+      "routeId": 77,
+      "directionId": 1,
+      "headsign": "Gara Mică Sosire",
+      "shapeId": "77_1"
+    },
+    {
+      "tripId": "78_0",
+      "routeId": 78,
+      "directionId": 0,
+      "headsign": "M-Ferma Apahida",
+      "shapeId": "78_0"
+    },
+    {
+      "tripId": "78_1",
+      "routeId": 78,
+      "directionId": 1,
+      "headsign": "Arte Plastice",
+      "shapeId": "78_1"
+    },
+    {
+      "tripId": "79_0",
+      "routeId": 79,
+      "directionId": 0,
+      "headsign": "M-Grădinița Câmpenești S",
+      "shapeId": "79_0"
+    },
+    {
+      "tripId": "79_1",
+      "routeId": 79,
+      "directionId": 1,
+      "headsign": "Arte Plastice",
+      "shapeId": "79_1"
+    },
+    {
+      "tripId": "80_0",
+      "routeId": 80,
+      "directionId": 0,
+      "headsign": "Guhring S",
+      "shapeId": "80_0"
+    },
+    {
+      "tripId": "80_1",
+      "routeId": 80,
+      "directionId": 1,
+      "headsign": "Arte Plastice",
+      "shapeId": "80_1"
+    },
+    {
+      "tripId": "81_0",
+      "routeId": 81,
+      "directionId": 0,
+      "headsign": "N. Balcescu  S",
+      "shapeId": "81_0"
+    },
+    {
+      "tripId": "81_1",
+      "routeId": 81,
+      "directionId": 1,
+      "headsign": "Arte Plastice",
+      "shapeId": "81_1"
+    },
+    {
+      "tripId": "82_0",
+      "routeId": 82,
+      "directionId": 0,
+      "headsign": "M-Lacului",
+      "shapeId": "82_0"
+    },
+    {
+      "tripId": "82_1",
+      "routeId": 82,
+      "directionId": 1,
+      "headsign": "Arte Plastice",
+      "shapeId": "82_1"
+    },
+    {
+      "tripId": "83_0",
+      "routeId": 83,
+      "directionId": 0,
+      "headsign": "M-Biserica Corpadea Sos",
+      "shapeId": "83_0"
+    },
+    {
+      "tripId": "83_1",
+      "routeId": 83,
+      "directionId": 1,
+      "headsign": "Arte Plastice",
+      "shapeId": "83_1"
+    },
+    {
+      "tripId": "84_0",
+      "routeId": 84,
+      "directionId": 0,
+      "headsign": "M-Primarie Pata Sos",
+      "shapeId": "84_0"
+    },
+    {
+      "tripId": "84_1",
+      "routeId": 84,
+      "directionId": 1,
+      "headsign": "Arte Plastice",
+      "shapeId": "84_1"
+    },
+    {
+      "tripId": "85_0",
+      "routeId": 85,
+      "directionId": 0,
+      "headsign": "P-ța Gării Noi",
+      "shapeId": "85_0"
+    },
+    {
+      "tripId": "85_1",
+      "routeId": 85,
+      "directionId": 1,
+      "headsign": "Disp. Bucium",
+      "shapeId": "85_1"
+    },
+    {
+      "tripId": "88_0",
+      "routeId": 88,
+      "directionId": 0,
+      "headsign": "Veseliei ",
+      "shapeId": "88_0"
+    },
+    {
+      "tripId": "88_1",
+      "routeId": 88,
+      "directionId": 1,
+      "headsign": "Posada",
+      "shapeId": "88_1"
+    },
+    {
+      "tripId": "90_0",
+      "routeId": 90,
+      "directionId": 0,
+      "headsign": "Pod Someșeni",
+      "shapeId": "90_0"
+    },
+    {
+      "tripId": "90_1",
+      "routeId": 90,
+      "directionId": 1,
+      "headsign": "Fântanele",
+      "shapeId": "90_1"
+    },
+    {
+      "tripId": "92_0",
+      "routeId": 92,
+      "directionId": 0,
+      "headsign": "Aleea Stadionului",
+      "shapeId": "92_0"
+    },
+    {
+      "tripId": "92_1",
+      "routeId": 92,
+      "directionId": 1,
+      "headsign": "M-Str. Retezat",
+      "shapeId": "92_1"
+    },
+    {
+      "tripId": "93_0",
+      "routeId": 93,
+      "directionId": 0,
+      "headsign": "Liceul Avram Iancu",
+      "shapeId": "93_0"
+    },
+    {
+      "tripId": "93_1",
+      "routeId": 93,
+      "directionId": 1,
+      "headsign": "Disp. Bucium",
+      "shapeId": "93_1"
+    },
+    {
+      "tripId": "94_0",
+      "routeId": 94,
+      "directionId": 0,
+      "headsign": "Liceul Avram Iancu",
+      "shapeId": "94_0"
+    },
+    {
+      "tripId": "94_1",
+      "routeId": 94,
+      "directionId": 1,
+      "headsign": "Academia de Muzica",
+      "shapeId": "94_1"
+    },
+    {
+      "tripId": "95_0",
+      "routeId": 95,
+      "directionId": 0,
+      "headsign": "Liceul Avram Iancu",
+      "shapeId": "95_0"
+    },
+    {
+      "tripId": "95_1",
+      "routeId": 95,
+      "directionId": 1,
+      "headsign": "Ghe. Dima",
+      "shapeId": "95_1"
+    },
+    {
+      "tripId": "96_0",
+      "routeId": 96,
+      "directionId": 0,
+      "headsign": "Liceul Avram Iancu",
+      "shapeId": "96_0"
+    },
+    {
+      "tripId": "96_1",
+      "routeId": 96,
+      "directionId": 1,
+      "headsign": "Snagov Sud",
+      "shapeId": "96_1"
+    },
+    {
+      "tripId": "97_0",
+      "routeId": 97,
+      "directionId": 0,
+      "headsign": "Liceul Avram Iancu",
+      "shapeId": "97_0"
+    },
+    {
+      "tripId": "97_1",
+      "routeId": 97,
+      "directionId": 1,
+      "headsign": "Plevnei Nord",
+      "shapeId": "97_1"
+    },
+    {
+      "tripId": "105_0",
+      "routeId": 105,
+      "directionId": 0,
+      "headsign": "Emerson Sosire",
+      "shapeId": "105_0"
+    },
+    {
+      "tripId": "105_1",
+      "routeId": 105,
+      "directionId": 1,
+      "headsign": "Academia de Muzica",
+      "shapeId": "105_1"
+    },
+    {
+      "tripId": "106_0",
+      "routeId": 106,
+      "directionId": 0,
+      "headsign": "Str. Kogalniceanu",
+      "shapeId": "106_0"
+    },
+    {
+      "tripId": "106_1",
+      "routeId": 106,
+      "directionId": 1,
+      "headsign": "Disp. Bucium",
+      "shapeId": "106_1"
+    },
+    {
+      "tripId": "107_0",
+      "routeId": 107,
+      "directionId": 0,
+      "headsign": "Str. Kogalniceanu",
+      "shapeId": "107_0"
+    },
+    {
+      "tripId": "107_1",
+      "routeId": 107,
+      "directionId": 1,
+      "headsign": "Disp. Bucium",
+      "shapeId": "107_1"
+    },
+    {
+      "tripId": "108_0",
+      "routeId": 108,
+      "directionId": 0,
+      "headsign": "Biblioteca Județeană",
+      "shapeId": "108_0"
+    },
+    {
+      "tripId": "108_1",
+      "routeId": 108,
+      "directionId": 1,
+      "headsign": "Plevnei Nord",
+      "shapeId": "108_1"
+    },
+    {
+      "tripId": "109_0",
+      "routeId": 109,
+      "directionId": 0,
+      "headsign": "Str. Kogalniceanu",
+      "shapeId": "109_0"
+    },
+    {
+      "tripId": "109_1",
+      "routeId": 109,
+      "directionId": 1,
+      "headsign": "Snagov Sud",
+      "shapeId": "109_1"
+    },
+    {
+      "tripId": "110_0",
+      "routeId": 110,
+      "directionId": 0,
+      "headsign": "Str. Kogalniceanu",
+      "shapeId": "110_0"
+    },
+    {
+      "tripId": "110_1",
+      "routeId": 110,
+      "directionId": 1,
+      "headsign": "Ghe. Dima",
+      "shapeId": "110_1"
+    },
+    {
+      "tripId": "111_0",
+      "routeId": 111,
+      "directionId": 0,
+      "headsign": "Str. Kogalniceanu",
+      "shapeId": "111_0"
+    },
+    {
+      "tripId": "111_1",
+      "routeId": 111,
+      "directionId": 1,
+      "headsign": "Drum Faget",
+      "shapeId": "111_1"
+    },
+    {
+      "tripId": "112_0",
+      "routeId": 112,
+      "directionId": 0,
+      "headsign": "Str. Kogalniceanu",
+      "shapeId": "112_0"
+    },
+    {
+      "tripId": "112_1",
+      "routeId": 112,
+      "directionId": 1,
+      "headsign": "Fantanele",
+      "shapeId": "112_1"
+    },
+    {
+      "tripId": "113_0",
+      "routeId": 113,
+      "directionId": 0,
+      "headsign": "Disp. Unirii",
+      "shapeId": "113_0"
+    },
+    {
+      "tripId": "113_1",
+      "routeId": 113,
+      "directionId": 1,
+      "headsign": "Disp. Zorilor",
+      "shapeId": "113_1"
+    },
+    {
+      "tripId": "114_0",
+      "routeId": 114,
+      "directionId": 0,
+      "headsign": "Soporului",
+      "shapeId": "114_0"
+    },
+    {
+      "tripId": "114_1",
+      "routeId": 114,
+      "directionId": 1,
+      "headsign": "Disp. Grigorescu",
+      "shapeId": "114_1"
+    },
+    {
+      "tripId": "115_0",
+      "routeId": 115,
+      "directionId": 0,
+      "headsign": "P-ta M. Viteazul Vest",
+      "shapeId": "115_0"
+    },
+    {
+      "tripId": "115_1",
+      "routeId": 115,
+      "directionId": 1,
+      "headsign": "P-ta Agroalimentara IRA",
+      "shapeId": "115_1"
+    },
+    {
+      "tripId": "116_0",
+      "routeId": 116,
+      "directionId": 0,
+      "headsign": "P-ta M.Viteazu Sos",
+      "shapeId": "116_0"
+    },
+    {
+      "tripId": "116_1",
+      "routeId": 116,
+      "directionId": 1,
+      "headsign": "Roata Faget Sos.",
+      "shapeId": "116_1"
+    },
+    {
+      "tripId": "117_0",
+      "routeId": 117,
+      "directionId": 0,
+      "headsign": "P-ța Gării Sosire",
+      "shapeId": "117_0"
+    },
+    {
+      "tripId": "117_1",
+      "routeId": 117,
+      "directionId": 1,
+      "headsign": "Izlazului",
+      "shapeId": "117_1"
+    },
+    {
+      "tripId": "119_0",
+      "routeId": 119,
+      "directionId": 0,
+      "headsign": "Disp. ERS CUG",
+      "shapeId": "119_0"
+    },
+    {
+      "tripId": "119_1",
+      "routeId": 119,
+      "directionId": 1,
+      "headsign": "Disp. Unirii",
+      "shapeId": "119_1"
+    },
+    {
+      "tripId": "120_0",
+      "routeId": 120,
+      "directionId": 0,
+      "headsign": "ERS CUG Sud",
+      "shapeId": "120_0"
+    },
+    {
+      "tripId": "120_1",
+      "routeId": 120,
+      "directionId": 1,
+      "headsign": "Disp. Clăbucet",
+      "shapeId": "120_1"
+    },
+    {
+      "tripId": "121_0",
+      "routeId": 121,
+      "directionId": 0,
+      "headsign": "M Pensiunea Dalia Gilau Nord",
+      "shapeId": "121_0"
+    },
+    {
+      "tripId": "121_1",
+      "routeId": 121,
+      "directionId": 1,
+      "headsign": "Disp. Bucium",
+      "shapeId": "121_1"
+    },
+    {
+      "tripId": "122_0",
+      "routeId": 122,
+      "directionId": 0,
+      "headsign": "M Uzina Electrica Nord",
+      "shapeId": "122_0"
+    },
+    {
+      "tripId": "122_1",
+      "routeId": 122,
+      "directionId": 1,
+      "headsign": "Disp. Bucium",
+      "shapeId": "122_1"
+    },
+    {
+      "tripId": "129_0",
+      "routeId": 129,
+      "directionId": 0,
+      "headsign": "Piața AGRO Sosire",
+      "shapeId": "129_0"
+    },
+    {
+      "tripId": "129_1",
+      "routeId": 129,
+      "directionId": 1,
+      "headsign": "Crinului",
+      "shapeId": "129_1"
+    },
+    {
+      "tripId": "131_0",
+      "routeId": 131,
+      "directionId": 0,
+      "headsign": "Vila Tusa Sosire",
+      "shapeId": "131_0"
+    },
+    {
+      "tripId": "131_1",
+      "routeId": 131,
+      "directionId": 1,
+      "headsign": "P-ța Avram Iancu",
+      "shapeId": "131_1"
+    },
+    {
+      "tripId": "132_0",
+      "routeId": 132,
+      "directionId": 0,
+      "headsign": "Str. Kogălniceanu",
+      "shapeId": "132_0"
+    },
+    {
+      "tripId": "132_1",
+      "routeId": 132,
+      "directionId": 1,
+      "headsign": "Giordano Bruno",
+      "shapeId": "132_1"
+    },
+    {
+      "tripId": "133_0",
+      "routeId": 133,
+      "directionId": 0,
+      "headsign": "Colegiul Tehnic Anghel Saligny",
+      "shapeId": "133_0"
+    },
+    {
+      "tripId": "133_1",
+      "routeId": 133,
+      "directionId": 1,
+      "headsign": "Plevnei Sud",
+      "shapeId": "133_1"
+    },
+    {
+      "tripId": "134_0",
+      "routeId": 134,
+      "directionId": 0,
+      "headsign": "I. Ionescu Sosire",
+      "shapeId": "134_0"
+    },
+    {
+      "tripId": "134_1",
+      "routeId": 134,
+      "directionId": 1,
+      "headsign": "Disp. Bucium",
+      "shapeId": "134_1"
+    },
+    {
+      "tripId": "137_0",
+      "routeId": 137,
+      "directionId": 0,
+      "headsign": "Liceul Avram Iancu",
+      "shapeId": "137_0"
+    },
+    {
+      "tripId": "137_1",
+      "routeId": 137,
+      "directionId": 1,
+      "headsign": "Plevnei Nord",
+      "shapeId": "137_1"
+    },
+    {
+      "tripId": "138_0",
+      "routeId": 138,
+      "directionId": 0,
+      "headsign": "Str. Kogălniceanu",
+      "shapeId": "138_0"
+    },
+    {
+      "tripId": "138_1",
+      "routeId": 138,
+      "directionId": 1,
+      "headsign": "Plevnei Nord",
+      "shapeId": "138_1"
+    },
+    {
+      "tripId": "139_0",
+      "routeId": 139,
+      "directionId": 0,
+      "headsign": "M-Biserica Vâlcele Sos",
+      "shapeId": "139_0"
+    },
+    {
+      "tripId": "139_1",
+      "routeId": 139,
+      "directionId": 1,
+      "headsign": "Posada",
+      "shapeId": "139_1"
+    },
+    {
+      "tripId": "144_0",
+      "routeId": 144,
+      "directionId": 0,
+      "headsign": "Disp. Grigorescu",
+      "shapeId": "144_0"
+    },
+    {
+      "tripId": "145_0",
+      "routeId": 145,
+      "directionId": 0,
+      "headsign": "M-Liceul Dumitru Tautan Floresti",
+      "shapeId": "145_0"
+    },
+    {
+      "tripId": "146_0",
+      "routeId": 146,
+      "directionId": 0,
+      "headsign": "M-Sesu de Sus Sosire",
+      "shapeId": "146_0"
+    },
+    {
+      "tripId": "147_0",
+      "routeId": 147,
+      "directionId": 0,
+      "headsign": "M-Liceul Dumitru Tautan Floresti",
+      "shapeId": "147_0"
+    },
+    {
+      "tripId": "148_0",
+      "routeId": 148,
+      "directionId": 0,
+      "headsign": "M-Str. Retezat",
+      "shapeId": "148_0"
+    },
+    {
+      "tripId": "149_0",
+      "routeId": 149,
+      "directionId": 0,
+      "headsign": "M-Cetatii 2 (Floresti)",
+      "shapeId": "149_0"
+    },
+    {
+      "tripId": "149_1",
+      "routeId": 149,
+      "directionId": 1,
+      "headsign": "M-Scoala G. Sincai Floresti",
+      "shapeId": "149_1"
+    },
+    {
+      "tripId": "150_0",
+      "routeId": 150,
+      "directionId": 0,
+      "headsign": "M Centru N",
+      "shapeId": "150_0"
+    },
+    {
+      "tripId": "150_1",
+      "routeId": 150,
+      "directionId": 1,
+      "headsign": "Posada",
+      "shapeId": "150_1"
+    },
+    {
+      "tripId": "151_0",
+      "routeId": 151,
+      "directionId": 0,
+      "headsign": "M Primaria Petrestii de Jos S",
+      "shapeId": "151_0"
+    },
+    {
+      "tripId": "151_1",
+      "routeId": 151,
+      "directionId": 1,
+      "headsign": "Posada",
+      "shapeId": "151_1"
+    },
+    {
+      "tripId": "152_0",
+      "routeId": 152,
+      "directionId": 0,
+      "headsign": "Disp. Grigorescu",
+      "shapeId": "152_0"
+    },
+    {
+      "tripId": "152_1",
+      "routeId": 152,
+      "directionId": 1,
+      "headsign": "Ghe. Dima",
+      "shapeId": "152_1"
+    },
+    {
+      "tripId": "153_0",
+      "routeId": 153,
+      "directionId": 0,
+      "headsign": "Electromontaj Sud",
+      "shapeId": "153_0"
+    },
+    {
+      "tripId": "153_1",
+      "routeId": 153,
+      "directionId": 1,
+      "headsign": "P-ța Gării Sosire",
+      "shapeId": "153_1"
+    },
+    {
+      "tripId": "155_0",
+      "routeId": 155,
+      "directionId": 0,
+      "headsign": "Panselutelor 9",
+      "shapeId": "155_0"
+    },
+    {
+      "tripId": "155_1",
+      "routeId": 155,
+      "directionId": 1,
+      "headsign": "Disp. Zorilor",
+      "shapeId": "155_1"
+    },
+    {
+      "tripId": "156_0",
+      "routeId": 156,
+      "directionId": 0,
+      "headsign": "M - Savadisla01",
+      "shapeId": "156_0"
+    },
+    {
+      "tripId": "156_1",
+      "routeId": 156,
+      "directionId": 1,
+      "headsign": "Disp. Clăbucet",
+      "shapeId": "156_1"
+    },
+    {
+      "tripId": "157_0",
+      "routeId": 157,
+      "directionId": 0,
+      "headsign": "Biserica lemn Saliste",
+      "shapeId": "157_0"
+    },
+    {
+      "tripId": "157_1",
+      "routeId": 157,
+      "directionId": 1,
+      "headsign": "Posada",
+      "shapeId": "157_1"
+    },
+    {
+      "tripId": "158_0",
+      "routeId": 158,
+      "directionId": 0,
+      "headsign": "Filea de sus",
+      "shapeId": "158_0"
+    },
+    {
+      "tripId": "158_1",
+      "routeId": 158,
+      "directionId": 1,
+      "headsign": "Posada",
+      "shapeId": "158_1"
+    },
+    {
+      "tripId": "160_0",
+      "routeId": 160,
+      "directionId": 0,
+      "headsign": "M-Mera Noua",
+      "shapeId": "160_0"
+    },
+    {
+      "tripId": "160_1",
+      "routeId": 160,
+      "directionId": 1,
+      "headsign": "Gara Mică Sosire",
+      "shapeId": "160_1"
+    },
+    {
+      "tripId": "161_0",
+      "routeId": 161,
+      "directionId": 0,
+      "headsign": "Gheorghe Sion Vest",
+      "shapeId": "161_0"
+    },
+    {
+      "tripId": "161_1",
+      "routeId": 161,
+      "directionId": 1,
+      "headsign": "Pod Traian",
+      "shapeId": "161_1"
+    },
+    {
+      "tripId": "164_0",
+      "routeId": 164,
+      "directionId": 0,
+      "headsign": "Disp. Alverna",
+      "shapeId": "164_0"
+    },
+    {
+      "tripId": "164_1",
+      "routeId": 164,
+      "directionId": 1,
+      "headsign": "Jiului",
+      "shapeId": "164_1"
+    },
+    {
+      "tripId": "166_0",
+      "routeId": 166,
+      "directionId": 0,
+      "headsign": "P-ța Gării Sosire",
+      "shapeId": "166_0"
+    },
+    {
+      "tripId": "166_1",
+      "routeId": 166,
+      "directionId": 1,
+      "headsign": "Disp. IRA",
+      "shapeId": "166_1"
+    },
+    {
+      "tripId": "167_0",
+      "routeId": 167,
+      "directionId": 0,
+      "headsign": "M-Luxor N (Florești)",
+      "shapeId": "167_0"
+    },
+    {
+      "tripId": "167_1",
+      "routeId": 167,
+      "directionId": 1,
+      "headsign": "Disp. Bucium",
+      "shapeId": "167_1"
+    },
+    {
+      "tripId": "168_0",
+      "routeId": 168,
+      "directionId": 0,
+      "headsign": "M-Primăria Florești S",
+      "shapeId": "168_0"
+    },
+    {
+      "tripId": "168_1",
+      "routeId": 168,
+      "directionId": 1,
+      "headsign": "Disp. Bucium",
+      "shapeId": "168_1"
+    },
+    {
+      "tripId": "169_0",
+      "routeId": 169,
+      "directionId": 0,
+      "headsign": "M-Primăria Florești N",
+      "shapeId": "169_0"
+    },
+    {
+      "tripId": "169_1",
+      "routeId": 169,
+      "directionId": 1,
+      "headsign": "P-ța M. Viteazul Sud",
+      "shapeId": "169_1"
+    },
+    {
+      "tripId": "170_0",
+      "routeId": 170,
+      "directionId": 0,
+      "headsign": "M Ferma 9 Sud",
+      "shapeId": "170_0"
+    },
+    {
+      "tripId": "170_1",
+      "routeId": 170,
+      "directionId": 1,
+      "headsign": "Disp. Bucium",
+      "shapeId": "170_1"
+    },
+    {
+      "tripId": "171_0",
+      "routeId": 171,
+      "directionId": 0,
+      "headsign": "EMERSON",
+      "shapeId": "171_0"
+    },
+    {
+      "tripId": "171_1",
+      "routeId": 171,
+      "directionId": 1,
+      "headsign": "Disp. Alverna",
+      "shapeId": "171_1"
+    },
+    {
+      "tripId": "172_0",
+      "routeId": 172,
+      "directionId": 0,
+      "headsign": "M-Regina Sud",
+      "shapeId": "172_0"
+    },
+    {
+      "tripId": "172_1",
+      "routeId": 172,
+      "directionId": 1,
+      "headsign": "M-Complex Baciu Sos",
+      "shapeId": "172_1"
+    },
+    {
+      "tripId": "174_0",
+      "routeId": 174,
+      "directionId": 0,
+      "headsign": "Emerson Sosire",
+      "shapeId": "174_0"
+    },
+    {
+      "tripId": "175_0",
+      "routeId": 175,
+      "directionId": 0,
+      "headsign": "Emerson Sosire",
+      "shapeId": "175_0"
+    },
+    {
+      "tripId": "176_0",
+      "routeId": 176,
+      "directionId": 0,
+      "headsign": "Emerson Sosire",
+      "shapeId": "176_0"
+    },
+    {
+      "tripId": "176_1",
+      "routeId": 176,
+      "directionId": 1,
+      "headsign": "M-Florești Cetate Plecare",
+      "shapeId": "176_1"
+    },
+    {
+      "tripId": "177_0",
+      "routeId": 177,
+      "directionId": 0,
+      "headsign": "M-Str. Retezat",
+      "shapeId": "177_0"
+    },
+    {
+      "tripId": "178_0",
+      "routeId": 178,
+      "directionId": 0,
+      "headsign": "M-Str. Retezat",
+      "shapeId": "178_0"
+    },
+    {
+      "tripId": "179_0",
+      "routeId": 179,
+      "directionId": 0,
+      "headsign": "Emerson Sosire",
+      "shapeId": "179_0"
+    },
+    {
+      "tripId": "179_1",
+      "routeId": 179,
+      "directionId": 1,
+      "headsign": "M-Chinteni Lac Sosire",
+      "shapeId": "179_1"
+    },
+    {
+      "tripId": "180_0",
+      "routeId": 180,
+      "directionId": 0,
+      "headsign": "Emerson Sosire",
+      "shapeId": "180_0"
+    },
+    {
+      "tripId": "180_1",
+      "routeId": 180,
+      "directionId": 1,
+      "headsign": "M-Complex Baciu Sos",
+      "shapeId": "180_1"
+    },
+    {
+      "tripId": "181_0",
+      "routeId": 181,
+      "directionId": 0,
+      "headsign": "M-Razoare Vest",
+      "shapeId": "181_0"
+    },
+    {
+      "tripId": "181_1",
+      "routeId": 181,
+      "directionId": 1,
+      "headsign": "Disp. Bucium",
+      "shapeId": "181_1"
+    },
+    {
+      "tripId": "183_0",
+      "routeId": 183,
+      "directionId": 0,
+      "headsign": "Aeroport Terminal",
+      "shapeId": "183_0"
+    },
+    {
+      "tripId": "184_0",
+      "routeId": 184,
+      "directionId": 0,
+      "headsign": "Aleea Stadionului",
+      "shapeId": "184_0"
+    },
+    {
+      "tripId": "184_1",
+      "routeId": 184,
+      "directionId": 1,
+      "headsign": "M-Str. Retezat",
+      "shapeId": "184_1"
+    },
+    {
+      "tripId": "185_0",
+      "routeId": 185,
+      "directionId": 0,
+      "headsign": "M-Ferma Apahida",
+      "shapeId": "185_0"
+    },
+    {
+      "tripId": "185_1",
+      "routeId": 185,
+      "directionId": 1,
+      "headsign": "Arte Plastice",
+      "shapeId": "185_1"
+    },
+    {
+      "tripId": "186_0",
+      "routeId": 186,
+      "directionId": 0,
+      "headsign": "CREIC Dus",
+      "shapeId": "186_0"
+    },
+    {
+      "tripId": "186_1",
+      "routeId": 186,
+      "directionId": 1,
+      "headsign": "Vama Chinteni",
+      "shapeId": "186_1"
+    },
+    {
+      "tripId": "187_0",
+      "routeId": 187,
+      "directionId": 0,
+      "headsign": "ERS CUG Sud",
+      "shapeId": "187_0"
+    },
+    {
+      "tripId": "187_1",
+      "routeId": 187,
+      "directionId": 1,
+      "headsign": "Disp. IRA",
+      "shapeId": "187_1"
+    },
+    {
+      "tripId": "188_0",
+      "routeId": 188,
+      "directionId": 0,
+      "headsign": "Cimitirul Mos Ion Roata",
+      "shapeId": "188_0"
+    },
+    {
+      "tripId": "188_1",
+      "routeId": 188,
+      "directionId": 1,
+      "headsign": "Mareșal C-tin Prezan",
+      "shapeId": "188_1"
+    },
+    {
+      "tripId": "189_0",
+      "routeId": 189,
+      "directionId": 0,
+      "headsign": "Cimitirul Pomet",
+      "shapeId": "189_0"
+    },
+    {
+      "tripId": "189_1",
+      "routeId": 189,
+      "directionId": 1,
+      "headsign": "Piața Mihai Viteazul Est Sosire",
+      "shapeId": "189_1"
+    },
+    {
+      "tripId": "190_0",
+      "routeId": 190,
+      "directionId": 0,
+      "headsign": "P-ța M. Viteazul Sud",
+      "shapeId": "190_0"
+    },
+    {
+      "tripId": "190_1",
+      "routeId": 190,
+      "directionId": 1,
+      "headsign": "Disp. Grigorescu",
+      "shapeId": "190_1"
+    },
+    {
+      "tripId": "191_0",
+      "routeId": 191,
+      "directionId": 0,
+      "headsign": "Disp. Bucium",
+      "shapeId": "191_0"
+    },
+    {
+      "tripId": "192_0",
+      "routeId": 192,
+      "directionId": 0,
+      "headsign": "M-Florești Cetate Plecare",
+      "shapeId": "192_0"
+    },
+    {
+      "tripId": "193_0",
+      "routeId": 193,
+      "directionId": 0,
+      "headsign": "M-Liceul Dumitru Tautan Floresti",
+      "shapeId": "193_0"
+    },
+    {
+      "tripId": "194_0",
+      "routeId": 194,
+      "directionId": 0,
+      "headsign": "M-Someșului (Florești)",
+      "shapeId": "194_0"
+    },
+    {
+      "tripId": "195_0",
+      "routeId": 195,
+      "directionId": 0,
+      "headsign": "Disp. Bucium",
+      "shapeId": "195_0"
+    },
+    {
+      "tripId": "196_0",
+      "routeId": 196,
+      "directionId": 0,
+      "headsign": "Disp. Bucium",
+      "shapeId": "196_0"
+    },
+    {
+      "tripId": "197_0",
+      "routeId": 197,
+      "directionId": 0,
+      "headsign": "M-Liceul Dumitru Tautan Floresti",
+      "shapeId": "197_0"
+    },
+    {
+      "tripId": "200_0",
+      "routeId": 200,
+      "directionId": 0,
+      "headsign": "M-Liceul Dumitru Tautan Floresti",
+      "shapeId": "200_0"
+    },
+    {
+      "tripId": "201_0",
+      "routeId": 201,
+      "directionId": 0,
+      "headsign": "M-Liceul Dumitru Tautan Floresti",
+      "shapeId": "201_0"
+    },
+    {
+      "tripId": "202_0",
+      "routeId": 202,
+      "directionId": 0,
+      "headsign": "Biserica Sf. Petru",
+      "shapeId": "202_0"
+    },
+    {
+      "tripId": "202_1",
+      "routeId": 202,
+      "directionId": 1,
+      "headsign": "Sala Sporturilor",
+      "shapeId": "202_1"
+    },
+    {
+      "tripId": "205_0",
+      "routeId": 205,
+      "directionId": 0,
+      "headsign": "Paris",
+      "shapeId": "205_0"
+    },
+    {
+      "tripId": "205_1",
+      "routeId": 205,
+      "directionId": 1,
+      "headsign": "Constanța",
+      "shapeId": "205_1"
+    }
+  ]
+}

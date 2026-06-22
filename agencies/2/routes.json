@@ -1,10 +1,1014 @@
 {
-  "_comment": "Maps CTP route short names to Tranzy route_id. Source: Tranzy /routes API for agency_id=2. Update when CTP adds/removes lines.",
+  "_comment": "Auto-generated from Tranzy /routes API for agency_id=2",
+  "_generated": "2026-06-22T06:23:35.209Z",
   "routes": [
-    { "shortName": "1", "routeId": 1, "longName": "Str. Bucium - P-ta 1 Mai", "type": 11 },
-    { "shortName": "42", "routeId": 40, "longName": "P-ta M. Viteazul - Str. Câmpului", "type": 3 },
-    { "shortName": "19", "routeId": 6, "longName": "P-ta M. Viteazul - Str. E. Quinet", "type": 3 },
-    { "shortName": "24", "routeId": 12, "longName": "Str. Unirii - Str. Bucium", "type": 3 }
-  ],
-  "_todo": "Complete list from Tranzy /routes endpoint (all ~100+ routes for agency 2). Only a few are seeded here as examples."
+    {
+      "shortName": "1",
+      "routeId": 1,
+      "longName": "Str. Bucium - P-ta 1 Mai",
+      "type": 11
+    },
+    {
+      "shortName": "100",
+      "routeId": 2,
+      "longName": "P-ta Garii - B-dul Muncii",
+      "type": 0
+    },
+    {
+      "shortName": "101",
+      "routeId": 3,
+      "longName": "Str. Bucium - P-ta Garii",
+      "type": 0
+    },
+    {
+      "shortName": "102",
+      "routeId": 4,
+      "longName": "Str. Bucium - B-dul Muncii",
+      "type": 0
+    },
+    {
+      "shortName": "102L",
+      "routeId": 5,
+      "longName": "Str. Bucium - DEPOU",
+      "type": 0
+    },
+    {
+      "shortName": "19",
+      "routeId": 6,
+      "longName": "P-ta M. Viteazul - Str. E. Quinet",
+      "type": 3
+    },
+    {
+      "shortName": "20",
+      "routeId": 7,
+      "longName": "Col. Borhanci - P-ta Stefan cel Mare",
+      "type": 3
+    },
+    {
+      "shortName": "21",
+      "routeId": 8,
+      "longName": "P-ta M. Viteazul - Cart. Buna Ziua",
+      "type": 3
+    },
+    {
+      "shortName": "22",
+      "routeId": 9,
+      "longName": "P-ta Garii - Str. I. Moldovan",
+      "type": 3
+    },
+    {
+      "shortName": "23",
+      "routeId": 10,
+      "longName": "P-ta M. Viteazul - C.U.G",
+      "type": 11
+    },
+    {
+      "shortName": "24",
+      "routeId": 12,
+      "longName": "Str. Unirii - Str. Bucium",
+      "type": 3
+    },
+    {
+      "shortName": "24B",
+      "routeId": 13,
+      "longName": "Str. Unirii - Vivo Center",
+      "type": 3
+    },
+    {
+      "shortName": "25",
+      "routeId": 14,
+      "longName": "Str. Bucium - Str. Unirii",
+      "type": 11
+    },
+    {
+      "shortName": "25N",
+      "routeId": 15,
+      "longName": "Str. Bucium - Str. Unirii",
+      "type": 11
+    },
+    {
+      "shortName": "26",
+      "routeId": 16,
+      "longName": "Cart. Grigorescu - B-dul Muncii",
+      "type": 3
+    },
+    {
+      "shortName": "26L",
+      "routeId": 17,
+      "longName": "Cart. Grigorescu - Str. Emerson",
+      "type": 3
+    },
+    {
+      "shortName": "27",
+      "routeId": 18,
+      "longName": "Cart. Grigorescu - P-ta Garii",
+      "type": 3
+    },
+    {
+      "shortName": "28",
+      "routeId": 19,
+      "longName": "Cart. Grigorescu - P-ta M. Viteazul",
+      "type": 3
+    },
+    {
+      "shortName": "28B",
+      "routeId": 20,
+      "longName": "Polus Center - P-ta M. Viteazul",
+      "type": 3
+    },
+    {
+      "shortName": "29",
+      "routeId": 21,
+      "longName": "Roata Faget - Str. Henri Barbusse",
+      "type": 3
+    },
+    {
+      "shortName": "3",
+      "routeId": 22,
+      "longName": "Str. Unirii - P-ta Garii",
+      "type": 11
+    },
+    {
+      "shortName": "30",
+      "routeId": 23,
+      "longName": "Cart. Grigorescu - Str. Aurel Vlaicu",
+      "type": 3
+    },
+    {
+      "shortName": "31",
+      "routeId": 24,
+      "longName": "P-ta M. Viteazul - Calea Baciului",
+      "type": 3
+    },
+    {
+      "shortName": "32",
+      "routeId": 25,
+      "longName": "Str. C. Brancusi - P-ta M. Viteazul",
+      "type": 3
+    },
+    {
+      "shortName": "32B",
+      "routeId": 26,
+      "longName": "Str. C. Brancusi - P-ta Garii",
+      "type": 3
+    },
+    {
+      "shortName": "33",
+      "routeId": 27,
+      "longName": "Aleea Baisoara - P-ta M. Viteazul",
+      "type": 3
+    },
+    {
+      "shortName": "34",
+      "routeId": 28,
+      "longName": "Aleea Baisoara - P-ta Garii",
+      "type": 3
+    },
+    {
+      "shortName": "35",
+      "routeId": 29,
+      "longName": "Cart. Zorilor - P-ta Garii",
+      "type": 3
+    },
+    {
+      "shortName": "36B",
+      "routeId": 30,
+      "longName": "P-ta M. Viteazul - Str. Ion Ionescu de la Brad",
+      "type": 3
+    },
+    {
+      "shortName": "36L",
+      "routeId": 31,
+      "longName": "P-ta M. Viteazul - Str. Emerson",
+      "type": 3
+    },
+    {
+      "shortName": "37",
+      "routeId": 32,
+      "longName": "P-ta M. Viteazul - Str. Romulus Vuia",
+      "type": 3
+    },
+    {
+      "shortName": "38",
+      "routeId": 33,
+      "longName": "P-ta M. Viteazul - Str. Vanatorului",
+      "type": 3
+    },
+    {
+      "shortName": "39",
+      "routeId": 34,
+      "longName": "P-ta M. Viteazul - Valea Chintaului",
+      "type": 3
+    },
+    {
+      "shortName": "39L",
+      "routeId": 35,
+      "longName": "P-ta M. Viteazul - Catun",
+      "type": 3
+    },
+    {
+      "shortName": "4",
+      "routeId": 36,
+      "longName": "Str. Aurel Vlaicu - P-ta Garii",
+      "type": 11
+    },
+    {
+      "shortName": "40",
+      "routeId": 37,
+      "longName": "P-ta Stefan cel Mare - Colonia Faget",
+      "type": 3
+    },
+    {
+      "shortName": "40S",
+      "routeId": 38,
+      "longName": "P-ta Stefan cel Mare - Calea Turzii",
+      "type": 3
+    },
+    {
+      "shortName": "41",
+      "routeId": 39,
+      "longName": "Cart. Grigorescu - P-ta 1 Mai",
+      "type": 3
+    },
+    {
+      "shortName": "42",
+      "routeId": 40,
+      "longName": "P-ta M. Viteazul - Str. Campului",
+      "type": 3
+    },
+    {
+      "shortName": "43",
+      "routeId": 41,
+      "longName": "Cart. Grigorescu - Cart. Zorilor",
+      "type": 3
+    },
+    {
+      "shortName": "43B",
+      "routeId": 42,
+      "longName": "Cart. Grigorescu - Calea Turzii",
+      "type": 3
+    },
+    {
+      "shortName": "43P",
+      "routeId": 43,
+      "longName": "Polus Center - Cart. Zorilor",
+      "type": 3
+    },
+    {
+      "shortName": "46",
+      "routeId": 44,
+      "longName": "Str. Eugen Ionesco - P-ta Stefan cel Mare",
+      "type": 3
+    },
+    {
+      "shortName": "46B",
+      "routeId": 45,
+      "longName": "Cart. Zorilor - Str. Aurel Vlaicu",
+      "type": 3
+    },
+    {
+      "shortName": "47",
+      "routeId": 46,
+      "longName": "P-ta M. Viteazul - Str. Harghitei",
+      "type": 3
+    },
+    {
+      "shortName": "48",
+      "routeId": 47,
+      "longName": "Aleea Baisoara - B-dul Muncii",
+      "type": 3
+    },
+    {
+      "shortName": "48L",
+      "routeId": 48,
+      "longName": "Aleea Baisoara - Str. Emerson",
+      "type": 3
+    },
+    {
+      "shortName": "5",
+      "routeId": 49,
+      "longName": "P-ta Garii - str. Traian Vuia",
+      "type": 11
+    },
+    {
+      "shortName": "50",
+      "routeId": 50,
+      "longName": "Cart. Zorilor - B-dul Muncii",
+      "type": 3
+    },
+    {
+      "shortName": "50L",
+      "routeId": 51,
+      "longName": "Cart. Zorilor - Str. Emerson",
+      "type": 3
+    },
+    {
+      "shortName": "52",
+      "routeId": 52,
+      "longName": "Str. Bucium - Str. Plevnei",
+      "type": 3
+    },
+    {
+      "shortName": "6",
+      "routeId": 53,
+      "longName": "Str. Bucium - Str. Aurel Vlaicu",
+      "type": 11
+    },
+    {
+      "shortName": "7",
+      "routeId": 54,
+      "longName": "Str. Aurel Vlaicu - Str. Izlazului",
+      "type": 11
+    },
+    {
+      "shortName": "8",
+      "routeId": 55,
+      "longName": "P-ta M. Viteazul - Str. Traian Vuia",
+      "type": 11
+    },
+    {
+      "shortName": "8L",
+      "routeId": 56,
+      "longName": "Maresal C-tin Prezan - AGRO TRANSILVANIA",
+      "type": 3
+    },
+    {
+      "shortName": "87B",
+      "routeId": 57,
+      "longName": "Str. Bucium - Polus Center",
+      "type": 3
+    },
+    {
+      "shortName": "9",
+      "routeId": 58,
+      "longName": "Str. Bucium - P-ta Garii",
+      "type": 3
+    },
+    {
+      "shortName": "M11",
+      "routeId": 59,
+      "longName": "P-ta Cipariu - Feleacu",
+      "type": 3
+    },
+    {
+      "shortName": "M12",
+      "routeId": 60,
+      "longName": "P-ta Cipariu - Valcele",
+      "type": 3
+    },
+    {
+      "shortName": "M13",
+      "routeId": 61,
+      "longName": "P-ta Stefan cel Mare - Gheorgheni",
+      "type": 3
+    },
+    {
+      "shortName": "M16",
+      "routeId": 62,
+      "longName": "P-ta Stefan cel Mare - Pasaj Ciurila",
+      "type": 3
+    },
+    {
+      "shortName": "M21",
+      "routeId": 63,
+      "longName": "Bucium - Floresti Cetate",
+      "type": 3
+    },
+    {
+      "shortName": "M22",
+      "routeId": 64,
+      "longName": "Bucium - Floresti Sesul de Sus",
+      "type": 3
+    },
+    {
+      "shortName": "M23",
+      "routeId": 65,
+      "longName": "Calea Floresti - Luna de Sus",
+      "type": 3
+    },
+    {
+      "shortName": "M24",
+      "routeId": 66,
+      "longName": "Calea Floresti - Complex Urbano",
+      "type": 3
+    },
+    {
+      "shortName": "M25",
+      "routeId": 67,
+      "longName": "Str. Bucium - Tauti",
+      "type": 3
+    },
+    {
+      "shortName": "M26U",
+      "routeId": 68,
+      "longName": "Uzinei Electrice - Floresti / Cetate",
+      "type": 3
+    },
+    {
+      "shortName": "M31",
+      "routeId": 69,
+      "longName": "P-ta M.Viteazul - Comuna Baciu",
+      "type": 3
+    },
+    {
+      "shortName": "M32",
+      "routeId": 70,
+      "longName": "P-ta Garii - Baciu / Suceagu",
+      "type": 3
+    },
+    {
+      "shortName": "M33",
+      "routeId": 71,
+      "longName": "P-ta Garii - Corusu / Salistea Noua",
+      "type": 3
+    },
+    {
+      "shortName": "M34",
+      "routeId": 72,
+      "longName": "P-ta Garii - Baciu / Mera",
+      "type": 3
+    },
+    {
+      "shortName": "M35",
+      "routeId": 73,
+      "longName": "P-ta Garii - Popesti Deal",
+      "type": 3
+    },
+    {
+      "shortName": "M37",
+      "routeId": 74,
+      "longName": "Cluj-Napoca - Feiurdeni / Satu Lung",
+      "type": 3
+    },
+    {
+      "shortName": "M38",
+      "routeId": 75,
+      "longName": "Cluj-Napoca - Macicasu",
+      "type": 3
+    },
+    {
+      "shortName": "M39",
+      "routeId": 76,
+      "longName": "Cluj-Napoca - Chinteni Lac",
+      "type": 3
+    },
+    {
+      "shortName": "M39L",
+      "routeId": 77,
+      "longName": "Cluj-Napoca - Deus",
+      "type": 3
+    },
+    {
+      "shortName": "M41",
+      "routeId": 78,
+      "longName": "Str. Aurel Vlaicu - Apahida",
+      "type": 3
+    },
+    {
+      "shortName": "M41L",
+      "routeId": 79,
+      "longName": "Str. Aurel Vlaicu - Campenesti",
+      "type": 3
+    },
+    {
+      "shortName": "M42",
+      "routeId": 80,
+      "longName": "Str. Aurel Vlaicu - Sannicoara",
+      "type": 3
+    },
+    {
+      "shortName": "M42L",
+      "routeId": 81,
+      "longName": "Str. Aurel Vlaicu -  Parcul Industrial Nervia",
+      "type": 3
+    },
+    {
+      "shortName": "M43",
+      "routeId": 82,
+      "longName": "Str. Aurel Vlaicu - Dezmir",
+      "type": 3
+    },
+    {
+      "shortName": "M44",
+      "routeId": 83,
+      "longName": "Str. A. Vlaicu - Corpadea",
+      "type": 3
+    },
+    {
+      "shortName": "M45",
+      "routeId": 84,
+      "longName": "Str. A. Vlaicu - Pata",
+      "type": 3
+    },
+    {
+      "shortName": "101A",
+      "routeId": 85,
+      "longName": "Str.Bucium - P-ta Garii Autobuze",
+      "type": 3
+    },
+    {
+      "shortName": "18",
+      "routeId": 88,
+      "longName": "Str. Posada - Str. Veseliei",
+      "type": 3
+    },
+    {
+      "shortName": "30U",
+      "routeId": 90,
+      "longName": "Grigorescu - IRA (Untold)",
+      "type": 3
+    },
+    {
+      "shortName": "M26",
+      "routeId": 92,
+      "longName": "Floresti - Cluj Napoca",
+      "type": 3
+    },
+    {
+      "shortName": "TE1",
+      "routeId": 93,
+      "longName": "Transport Elevi Manastur",
+      "type": 3
+    },
+    {
+      "shortName": "TE2",
+      "routeId": 94,
+      "longName": "Transport Elevi Bucium",
+      "type": 3
+    },
+    {
+      "shortName": "TE3",
+      "routeId": 95,
+      "longName": "Transport Elevi Zorilor",
+      "type": 3
+    },
+    {
+      "shortName": "TE4",
+      "routeId": 96,
+      "longName": "Transport Elevi Unirii",
+      "type": 3
+    },
+    {
+      "shortName": "TE5",
+      "routeId": 97,
+      "longName": "Transport Elevi IRA",
+      "type": 3
+    },
+    {
+      "shortName": "52L",
+      "routeId": 105,
+      "longName": "Bucium - EMERSON",
+      "type": 3
+    },
+    {
+      "shortName": "TE6",
+      "routeId": 106,
+      "longName": "Transport Elevi-Manastur - Kogalniceanu",
+      "type": 3
+    },
+    {
+      "shortName": "TE7",
+      "routeId": 107,
+      "longName": "Transport Elevi-Bucium - Kogalniceanu",
+      "type": 3
+    },
+    {
+      "shortName": "TE8",
+      "routeId": 108,
+      "longName": "Transport Elevi-Plevnei - Kogalniceanu",
+      "type": 3
+    },
+    {
+      "shortName": "TE9",
+      "routeId": 109,
+      "longName": "Transport Elevi-Unirii - Kogalniceanu",
+      "type": 3
+    },
+    {
+      "shortName": "TE10",
+      "routeId": 110,
+      "longName": "Transport Elevi-Zorilor - Kogalniceanu",
+      "type": 3
+    },
+    {
+      "shortName": "TE11",
+      "routeId": 111,
+      "longName": "Transport Elevi-Drum Faget - Kogalniceanu",
+      "type": 3
+    },
+    {
+      "shortName": "TE12",
+      "routeId": 112,
+      "longName": "Transport Elevi-Grigorescu - Kogalniceanu",
+      "type": 3
+    },
+    {
+      "shortName": "45",
+      "routeId": 113,
+      "longName": "Zorilor - Unirii",
+      "type": 3
+    },
+    {
+      "shortName": "44",
+      "routeId": 114,
+      "longName": "Grigorescu - Soporului",
+      "type": 3
+    },
+    {
+      "shortName": "53",
+      "routeId": 115,
+      "longName": "P-ta Agroalimentara IRA - P-ta Mihai Viteazul",
+      "type": 3
+    },
+    {
+      "shortName": "29S",
+      "routeId": 116,
+      "longName": "Sf. Ion - P.M.V. Sud",
+      "type": 3
+    },
+    {
+      "shortName": "2",
+      "routeId": 117,
+      "longName": "Ion Mester - P-ta Garii",
+      "type": 11
+    },
+    {
+      "shortName": "10",
+      "routeId": 119,
+      "longName": "Gheorgheni - CUG",
+      "type": 11
+    },
+    {
+      "shortName": "14",
+      "routeId": 120,
+      "longName": "Ion Mester - CUG",
+      "type": 11
+    },
+    {
+      "shortName": "M51",
+      "routeId": 121,
+      "longName": "Bucium - Pensiunea Dalia Gilau ",
+      "type": 3
+    },
+    {
+      "shortName": "M52",
+      "routeId": 122,
+      "longName": "Bucium - Somesul Rece",
+      "type": 3
+    },
+    {
+      "shortName": "8D",
+      "routeId": 129,
+      "longName": "P-ta Marasti - AGRO TRANSILVANIA",
+      "type": 3
+    },
+    {
+      "shortName": "46L",
+      "routeId": 131,
+      "longName": "P-ţa Ştefan cel Mare  -  Colonia Faget",
+      "type": 3
+    },
+    {
+      "shortName": "TE13",
+      "routeId": 132,
+      "longName": "Transport Elevi-Lombului-Kogalniceanu",
+      "type": 3
+    },
+    {
+      "shortName": "TE14",
+      "routeId": 133,
+      "longName": "Transport Elevi-Str.Campina - Liceul Teoretic Gheorghe Sincai",
+      "type": 3
+    },
+    {
+      "shortName": "52B",
+      "routeId": 134,
+      "longName": "Str. Bucium - Str. I. Ionescu de la Brad",
+      "type": 3
+    },
+    {
+      "shortName": "TE5B",
+      "routeId": 137,
+      "longName": "Plevnei - Barc - Liceul Avram Iancu",
+      "type": 3
+    },
+    {
+      "shortName": "TE8B",
+      "routeId": 138,
+      "longName": "Plevnei - Barc - Kogalniceanu",
+      "type": 3
+    },
+    {
+      "shortName": "M12L",
+      "routeId": 139,
+      "longName": "Posada - Feleacu - Valcele",
+      "type": 3
+    },
+    {
+      "shortName": "M75A",
+      "routeId": 144,
+      "longName": "TE1 Floresti",
+      "type": 3
+    },
+    {
+      "shortName": "M76A",
+      "routeId": 145,
+      "longName": "TE2 Floresti",
+      "type": 3
+    },
+    {
+      "shortName": "M77A",
+      "routeId": 146,
+      "longName": "TE3 Floresti",
+      "type": 3
+    },
+    {
+      "shortName": "M78A",
+      "routeId": 147,
+      "longName": "TE4 Floresti",
+      "type": 3
+    },
+    {
+      "shortName": "M79A",
+      "routeId": 148,
+      "longName": "TE5 Floresti",
+      "type": 3
+    },
+    {
+      "shortName": "M80",
+      "routeId": 149,
+      "longName": "TE6 Floresti",
+      "type": 3
+    },
+    {
+      "shortName": "M61",
+      "routeId": 150,
+      "longName": "Posada - Aiton - Rediu",
+      "type": 3
+    },
+    {
+      "shortName": "M71",
+      "routeId": 151,
+      "longName": "Posada - Petrestii de Jos",
+      "type": 3
+    },
+    {
+      "shortName": "54N",
+      "routeId": 152,
+      "longName": "Zorilor - Donath",
+      "type": 3
+    },
+    {
+      "shortName": "5N",
+      "routeId": 153,
+      "longName": "P-ta Garii - Traian Vuia",
+      "type": 11
+    },
+    {
+      "shortName": "50D",
+      "routeId": 155,
+      "longName": "P-ta Mihai Viteazu - Str. Panselutelor",
+      "type": 3
+    },
+    {
+      "shortName": "M81",
+      "routeId": 156,
+      "longName": "Str. Bucium - Savadisla",
+      "type": 3
+    },
+    {
+      "shortName": "M17",
+      "routeId": 157,
+      "longName": "Cluj N.– sat Saliste",
+      "type": 3
+    },
+    {
+      "shortName": "M18",
+      "routeId": 158,
+      "longName": "Cluj-N – Filea de Jos – Filea de Sus",
+      "type": 3
+    },
+    {
+      "shortName": "M34B",
+      "routeId": 160,
+      "longName": "P-ta Garii - Mera Noua",
+      "type": 3
+    },
+    {
+      "shortName": "56",
+      "routeId": 161,
+      "longName": "P-ta Mihai Viteazu- Dambu Rotund",
+      "type": 3
+    },
+    {
+      "shortName": "57",
+      "routeId": 164,
+      "longName": "Dunarii - Gheorgheni",
+      "type": 3
+    },
+    {
+      "shortName": "4N",
+      "routeId": 166,
+      "longName": "Str. Aurel Vlaicu - P-ta Garii",
+      "type": 11
+    },
+    {
+      "shortName": "M21S",
+      "routeId": 167,
+      "longName": "Bucium - Ferma Floresti",
+      "type": 3
+    },
+    {
+      "shortName": "M22S",
+      "routeId": 168,
+      "longName": "Bucium - Primaria Floresti",
+      "type": 3
+    },
+    {
+      "shortName": "M26S",
+      "routeId": 169,
+      "longName": "Cluj-Napoca - Primaria Floresti",
+      "type": 3
+    },
+    {
+      "shortName": "M24L",
+      "routeId": 170,
+      "longName": "Bucium - Floresti / Ferma",
+      "type": 3
+    },
+    {
+      "shortName": "57L",
+      "routeId": 171,
+      "longName": "Gheorgheni - Emerson",
+      "type": 3
+    },
+    {
+      "shortName": "89S",
+      "routeId": 172,
+      "longName": "Baciu-Emerson",
+      "type": 3
+    },
+    {
+      "shortName": "88A",
+      "routeId": 174,
+      "longName": "Floresti Cetate - Emerson",
+      "type": 3
+    },
+    {
+      "shortName": "88B",
+      "routeId": 175,
+      "longName": "Floresti Cetate - Emerson",
+      "type": 3
+    },
+    {
+      "shortName": "88D",
+      "routeId": 176,
+      "longName": "Floresti Cetate - Emerson",
+      "type": 3
+    },
+    {
+      "shortName": "88E",
+      "routeId": 177,
+      "longName": "Emerson - Floresti Cetate ",
+      "type": 3
+    },
+    {
+      "shortName": "88F",
+      "routeId": 178,
+      "longName": "Emerson - Floresti Cetate ",
+      "type": 3
+    },
+    {
+      "shortName": "88L",
+      "routeId": 179,
+      "longName": "Chinteni - Emerson",
+      "type": 3
+    },
+    {
+      "shortName": "88K",
+      "routeId": 180,
+      "longName": "Baciu - Emerson",
+      "type": 3
+    },
+    {
+      "shortName": "M27",
+      "routeId": 181,
+      "longName": "Razoare Floresti",
+      "type": 3
+    },
+    {
+      "shortName": "A1",
+      "routeId": 183,
+      "longName": "Piata Mihai Viteazu - Aeroport",
+      "type": 3
+    },
+    {
+      "shortName": "M26N",
+      "routeId": 184,
+      "longName": "Floresti - Cluj Napoca",
+      "type": 3
+    },
+    {
+      "shortName": "M41N",
+      "routeId": 185,
+      "longName": "Str. Aurel Vlaicu - Apahida",
+      "type": 3
+    },
+    {
+      "shortName": "39C",
+      "routeId": 186,
+      "longName": "Vama Chinteni - Creic",
+      "type": 3
+    },
+    {
+      "shortName": "12",
+      "routeId": 187,
+      "longName": "Aurel Vlaicu-CUG",
+      "type": 11
+    },
+    {
+      "shortName": "8S",
+      "routeId": 188,
+      "longName": "Aurel Vlaicu- Cimitir Mos Ion Roata",
+      "type": 3
+    },
+    {
+      "shortName": "39S",
+      "routeId": 189,
+      "longName": "Piata M. Viteazul-Cimitirul Pomet",
+      "type": 3
+    },
+    {
+      "shortName": "D51",
+      "routeId": 190,
+      "longName": "D51",
+      "type": 3
+    },
+    {
+      "shortName": "M75B",
+      "routeId": 191,
+      "longName": "TE1F",
+      "type": 3
+    },
+    {
+      "shortName": "M76B",
+      "routeId": 192,
+      "longName": "TE2 Floresti",
+      "type": 3
+    },
+    {
+      "shortName": "M76C",
+      "routeId": 193,
+      "longName": "TE2 Floresti",
+      "type": 3
+    },
+    {
+      "shortName": "M76D",
+      "routeId": 194,
+      "longName": "TE2 Floresti",
+      "type": 3
+    },
+    {
+      "shortName": "M76E",
+      "routeId": 195,
+      "longName": "TE2 Floresti",
+      "type": 3
+    },
+    {
+      "shortName": "M76F",
+      "routeId": 196,
+      "longName": "TE2 Floresti",
+      "type": 3
+    },
+    {
+      "shortName": "M77B",
+      "routeId": 197,
+      "longName": "TE3 Floresti",
+      "type": 3
+    },
+    {
+      "shortName": "M79B",
+      "routeId": 200,
+      "longName": "TE5 Floresti",
+      "type": 3
+    },
+    {
+      "shortName": "M79C",
+      "routeId": 201,
+      "longName": "TE5 Floresti",
+      "type": 3
+    },
+    {
+      "shortName": "TE-OG",
+      "routeId": 202,
+      "longName": "TE Onisifor Ghibu",
+      "type": 3
+    },
+    {
+      "shortName": "CS",
+      "routeId": 205,
+      "longName": "CURSA SPECIALA",
+      "type": 3
+    }
+  ]
 }

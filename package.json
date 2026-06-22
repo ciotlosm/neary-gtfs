@@ -14,8 +14,8 @@
     "node": ">=20"
   },
   "dependencies": {
-    "pdf-parse": "^1.1.1",
-    "archiver": "^7.0.0"
+    "archiver": "^7.0.1",
+    "pdf-parse": "^1.1.1"
   },
   "devDependencies": {
     "vitest": "^4.0.0"
