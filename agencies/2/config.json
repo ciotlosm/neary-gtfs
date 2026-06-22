@@ -6,6 +6,7 @@
   "lang": "ro",
   "schedulePage": "https://www.ctpcj.ro/index.php/ro/orare-linii/linii-urbane",
   "pdfUrlPattern": "https://www.ctpcj.ro/orare/pdf/orar_{routeShortName}.pdf",
+  "csvUrlPattern": "https://ctpcj.ro/orare/csv/orar_{routeShortName}_{serviceId}.csv",
   "serviceIds": {
     "weekday": "LV",
     "saturday": "S",
