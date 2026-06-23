@@ -78,3 +78,44 @@ jobs:
           - agency-2-schedule.json: compact payload (consumed directly by neary app)"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish to releases branch
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          HASH=$(cat output/agency-2/HASH)
+          DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+
+          # Create the manifest
+          cat > /tmp/manifest.json << EOF
+          {
+            "agency-2": {
+              "name": "CTP Cluj-Napoca",
+              "version": "$DATE",
+              "hash": "$HASH",
+              "files": {
+                "schedule": "agency-2-schedule.json",
+                "gtfs": "agency-2-gtfs.zip"
+              }
+            }
+          }
+          EOF
+
+          # Clone just the releases branch (orphan, shallow)
+          git clone --single-branch --branch releases --depth 1 \
+            "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git" \
+            /tmp/releases-branch
+
+          # Copy updated files
+          cp output/agency-2/agency-2-schedule.json /tmp/releases-branch/
+          cp output/agency-2/agency-2-gtfs.zip /tmp/releases-branch/
+          cp /tmp/manifest.json /tmp/releases-branch/manifest.json
+
+          # Commit and push
+          cd /tmp/releases-branch
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "release: agency 2 schedule ($DATE)" || echo "No changes"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
