@@ -225,17 +225,15 @@ async function main() {
         }
       }
 
-      // Update registry files only if any data changed for this agency
-      if (agencyChanged) {
-        const stats = writeRegistry(
-          id,
-          fetched.routes,
-          fetched.stops,
-          fetched.trips,
-          fetched.stop_times,
-        );
-        LOG(`  ✓ registry updated: ${stats.routes} routes, ${stats.stops} stops, ${stats.trips} trips`);
-      }
+      // Always write registry files (they're gitignored, needed by build.js)
+      const stats = writeRegistry(
+        id,
+        fetched.routes,
+        fetched.stops,
+        fetched.trips,
+        fetched.stop_times,
+      );
+      LOG(`  ✓ registry: ${stats.routes} routes, ${stats.stops} stops, ${stats.trips} trips`);
 
     } catch (err) {
       LOG(`  ✗ ERROR: ${err.message}`);
