@@ -249,9 +249,13 @@ async function main() {
     }
   }
 
-  // Write hash manifest
+  // Write hash manifest with metadata
   mkdirSync(dataDir, { recursive: true });
-  writeJsonPretty(join(dataDir, 'hashes.json'), newHashes);
+  const meta = {
+    syncedAt: new Date().toISOString(),
+    hashes: newHashes,
+  };
+  writeJsonPretty(join(dataDir, 'hashes.json'), meta);
 
   LOG(`\nSync complete: ${changedCount} changed, ${unchangedCount} unchanged.`);
 
