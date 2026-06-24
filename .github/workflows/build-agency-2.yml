@@ -104,6 +104,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish to releases branch
+        if: steps.sync.outputs.static_changed == 'true' || steps.check.outputs.changed == 'true'
         run: |
           DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)
 
