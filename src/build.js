@@ -96,7 +96,35 @@ function parseCsv(csvText) {
     if (parts[1] && /^\d{1,2}:\d{2}$/.test(parts[1])) departures.dir1.push(parts[1]);
   }
 
+  // Fix post-midnight times: CTP CSVs list departures in chronological order.
+  // Night routes go 23:00, 23:30, 0:00, 0:30, 1:00. The 0:xx times are
+  // AFTER midnight (next calendar day) but belong to the same service day.
+  // GTFS convention: use 24:00, 24:30, 25:00 for post-midnight trips.
+  // We detect this by checking if a time is EARLIER than the previous one.
+  fixPostMidnight(departures.dir0);
+  fixPostMidnight(departures.dir1);
+
   return { routeLongName, serviceName, serviceStart, inStopName, outStopName, departures };
+}
+
+/**
+ * Fix post-midnight times in a sorted departure list. If a time is earlier
+ * than the previous one (e.g. "0:30" after "23:30"), add 24 hours to it.
+ * Mutates the array in place.
+ */
+function fixPostMidnight(times) {
+  let prevMinutes = -1;
+  for (let i = 0; i < times.length; i++) {
+    const [h, m] = times[i].split(':').map(Number);
+    const minutes = h * 60 + m;
+    if (minutes < prevMinutes && prevMinutes > 20 * 60) {
+      // This time wrapped past midnight — add 24h
+      times[i] = `${h + 24}:${String(m).padStart(2, '0')}`;
+    }
+    // Track the effective minutes for next comparison
+    const [effH, effM] = times[i].split(':').map(Number);
+    prevMinutes = effH * 60 + effM;
+  }
 }
 
 // ============================================================================
