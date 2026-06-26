@@ -1,7 +1,10 @@
 # neary-gtfs
 
-> Multi-feed GTFS publisher for the [neary](https://github.com/ciotlosm/neary)
-> v2 PWA. Live registry: [`feeds.json`](https://cdn.jsdelivr.net/gh/ciotlosm/neary-gtfs@binaries/feeds.json).
+Multi-feed GTFS publisher for the [neary](https://github.com/ciotlosm/neary) v2 PWA.
+
+> [!NOTE]
+> **Live registry** (single source of truth for what's currently published):
+> [`https://cdn.jsdelivr.net/gh/ciotlosm/neary-gtfs@binaries/feeds.json`](https://cdn.jsdelivr.net/gh/ciotlosm/neary-gtfs@binaries/feeds.json)
 
 Acts as a **thin curation layer on top of Transitous + MobilityData**:
 fetches their well-validated zips, optionally enhances them (Cluj gets
@@ -49,10 +52,6 @@ Published nightly to the `binaries` branch by
 | `feeds.json` | pipeline | neary v2 app (single registry) |
 | `feeds/<id>.sqlite3.gz` | [`make-sqlite.js`](src/pipeline/make-sqlite.js) | neary v2 app (OPFS) — **always present** |
 | `feeds/<id>.gtfs.zip` | local enhancement ([`feeds/<id>/build.js`](feeds/)) | external GTFS tools — **only for `source.type === 'build'` feeds**; mirrors are accessible via Transitous's own URL |
-
-> [!TIP]
-> Live registry (single source of truth for what's currently published):
-> [`https://cdn.jsdelivr.net/gh/ciotlosm/neary-gtfs@binaries/feeds.json`](https://cdn.jsdelivr.net/gh/ciotlosm/neary-gtfs@binaries/feeds.json)
 
 > [!NOTE]
 > `feeds.json` is Ajv-validated against
