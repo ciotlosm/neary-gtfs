@@ -1,0 +1,16 @@
+{
+  "name": "CTP Cluj-Napoca",
+  "url": "https://www.ctpcj.ro",
+  "timezone": "Europe/Bucharest",
+  "lang": "ro",
+  "seedZipUrl": "https://external.gtfs.ro/cluj/CLUJ.zip",
+  "csvUrlPattern": "https://ctpcj.ro/orare/csv/orar_{routeShortName}_{serviceId}.csv",
+  "serviceIds": {
+    "weekday": "LV",
+    "saturday": "S",
+    "sunday": "D",
+    "daily": "LD"
+  },
+  "tripIdFormat": "{routeId}_{directionId}_{serviceId}_{sequence}_{HHMM}",
+  "notes": "The Cluj GTFS is seeded from external.gtfs.ro's CLUJ.zip (the mdb-2121 mirror; route/stop/shape structure is stable but the schedule is stale by months). We REPLACE calendar/trips/stop_times.txt with fresh data scraped daily from ctpcj.ro's CSV timetables, then re-pack the zip. Routes without CSV data fall back to the seed's trips."
+}

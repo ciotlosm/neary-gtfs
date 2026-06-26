@@ -5,12 +5,10 @@
   "type": "module",
   "description": "Multi-feed GTFS publisher for the neary v2 PWA (Transitous-aligned, with CTP Cluj enhancement)",
   "scripts": {
-    "sync": "node src/sync-tranzy.js",
-    "build": "node src/build.js",
-    "build:agency": "node src/build.js --agency",
     "pipeline": "node src/pipeline/build-all.js",
+    "build:ctp-cluj": "node feeds/ctp-cluj/build.js",
     "test": "vitest --run",
-    "lint": "eslint src/"
+    "lint": "eslint src/ feeds/"
   },
   "engines": {
     "node": ">=24"

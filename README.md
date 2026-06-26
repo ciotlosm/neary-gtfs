@@ -2,74 +2,82 @@
 
 Daily pipeline producing GTFS feeds for the [neary](https://github.com/ciotlosm/neary) PWA.
 
-> **Active refactor**: this branch (`refactor/feeds-from-transitous`) is
+> **Active refactor**: the `refactor/feeds-from-transitous` branch is
 > migrating to a multi-feed model aligned with
 > [public-transport/transitous](https://github.com/public-transport/transitous).
-> See [`docs/rebuild-v2/neary-gtfs-plan.md`](https://github.com/ciotlosm/neary/blob/rebuild/v2-svelte-sqlite/docs/rebuild-v2/neary-gtfs-plan.md)
-> in the neary repo for the full roadmap (M0 → M5).
+> The legacy Tranzy-driven path is gone here; the `releases` branch on
+> the remote (which v1 PWAs still consume) is left untouched.
 >
-> Current milestone: **M1 — repo scaffold** (this branch). The
-> `releases` branch / v1 app continue working from `main` unchanged.
+> Roadmap: [neary docs/rebuild-v2/neary-gtfs-plan.md §10](https://github.com/ciotlosm/neary/blob/rebuild/v2-svelte-sqlite/docs/rebuild-v2/neary-gtfs-plan.md#10-evolution-roadmap)
+> (M0 → M5). Current milestone: **M1+** — scaffold + Tranzy removal.
 
 ## What it produces
 
-**M1 (this branch, → `binaries-staging`)**:
+Published to the `binaries-staging` branch by
+[`.github/workflows/daily.yml`](.github/workflows/daily.yml):
 
 | File | Source | Consumer |
 |------|--------|----------|
-| `outputs/feeds.json` | new pipeline | neary v2 app (single registry) |
-| `outputs/feeds/ctp-cluj.gtfs.zip` | CTP CSV scrape (legacy `src/build.js`) | neary v2 app + GTFS validators |
+| `feeds.json` | new pipeline | neary v2 app (single registry) |
+| `feeds/ctp-cluj.gtfs.zip` | `feeds/ctp-cluj/build.js` (CTP CSV enhance of CLUJ.zip seed) | neary v2 app + GTFS validators |
 
-**Legacy (`main` → `releases`, unchanged)**:
+`feeds.json` is schema-validated at build time
+([`schemas/feeds.schema.json`](schemas/feeds.schema.json), draft-2020).
 
-| File | Source | Consumer |
-|------|--------|----------|
-| `data/<id>/*.json` | Tranzy API (`src/sync-tranzy.js`) | neary v1 app |
-| `agency-2-schedule.json` | CTP CSV scrape (`src/build.js`) | neary v1 app |
-| `agency-2-gtfs.zip` | same | GTFS validators / interop |
+## How it works
 
-## How it works (M1)
+`.github/workflows/daily.yml` runs at 00:30 UTC (after Transitous's
+daily import) or on manual trigger:
 
-`.github/workflows/daily.yml` runs at 00:30 UTC (after Transitous's daily
-import) or on manual trigger:
+1. **Pipeline** (`npm run pipeline`):
+   - `resolve-feeds.js` — `countries.json` + Transitous `feeds/<iso>.json`
+     → feed list (M1 emits only `ctp-cluj`; `RESOLVE_INCLUDE_TRANSITOUS=true`
+     opts into the multi-feed path landing in M2)
+   - `fetch-gtfs.js` — for `ctp-cluj`: invoke `feeds/ctp-cluj/build.js`;
+     for Transitous feeds: download from `api.transitous.org/gtfs/...`
+   - `derive-bbox.js` — extract `stops.txt`/`agency.txt`/`feed_info.txt`
+     via `unzip -p`
+   - `make-sqlite.js` — stub (M2 ports the SQLite generator)
+   - `make-app-registry.js` — write `outputs/feeds.json`, Ajv-validate
+2. **GTFS validator** — canonical MobilityData validator; fails on any ERROR
+3. **Publish** — push `outputs/` → `binaries-staging` branch
 
-1. **Sync legacy registry** (`npm run sync`) — still needed: the ctp-cluj
-   build reads route/stop registry from `agencies/2/*.json`. Replaced in M2.
-2. **Pipeline** (`npm run pipeline` = `node src/pipeline/build-all.js`):
-   - `resolve-feeds.js` → ctp-cluj only (set `RESOLVE_INCLUDE_TRANSITOUS=true` to test the multi-feed path)
-   - `fetch-gtfs.js` → invokes legacy `src/build.js` for ctp-cluj
-   - `derive-bbox.js` → reads stops.txt + agency.txt + feed_info.txt from the zip
-   - `make-sqlite.js` → no-op stub (M2 wires it up)
-   - `make-app-registry.js` → writes `outputs/feeds.json`, schema-validated
-3. **GTFS validator** — canonical MobilityData validator, fails build on any ERROR
-4. **Publish** — push `outputs/` to `binaries-staging` branch
+The Cluj enhancement (`feeds/ctp-cluj/build.js`):
+- Fetches `https://external.gtfs.ro/cluj/CLUJ.zip` (mdb-2121 mirror) as seed
+- Keeps `agency.txt`, `routes.txt`, `stops.txt`, `shapes.txt` from seed
+- **Regenerates** `calendar.txt`, `trips.txt`, `stop_times.txt` from
+  daily CTP CSV scrapes (`https://ctpcj.ro/orare/csv/orar_<route>_<svc>.csv`)
+- Adds `feed_info.txt` with `feed_publisher_name="neary-gtfs"`
+- Re-zips into `outputs/feeds/ctp-cluj.gtfs.zip`
 
-App consumes from:
+Trip IDs follow the canonical CTP format
+`<route_id>_<dir>_<service>_<seq>_<HHMM>` (e.g. `45_1_LV_9_0721`), which
+matches the `cluj-rt-feed.gtfs.ro` GTFS-Realtime feed exactly.
+
+App consumes from (M1+):
 ```
 https://raw.githubusercontent.com/ciotlosm/neary-gtfs/binaries-staging/feeds.json
 ```
-(After M2: `binaries` instead of `binaries-staging`; jsDelivr in front.)
+M2 will rename the publish branch to `binaries` and put jsDelivr in front.
 
 ## Structure
 
 ```
 countries.json                  # ISO codes whose Transitous feeds we mirror
-schemas/feeds.schema.json       # JSON Schema for outputs/feeds.json
-src/
-  build.js                      # legacy CTP build (kept until M2)
-  sync-tranzy.js                # legacy Tranzy registry sync (kept until M2)
-  pipeline/
-    build-all.js                # daily orchestrator
-    resolve-feeds.js            # countries.json + Transitous → feed list
-    fetch-gtfs.js               # build local or fetch upstream
-    derive-bbox.js              # zip → bbox + agencies + validity
-    make-sqlite.js              # M2 stub
-    make-app-registry.js        # → outputs/feeds.json
-    _smoke.js                   # local end-to-end check (no CI)
-agencies/2/config.json          # CTP URL patterns (read by src/build.js)
-.github/workflows/
-  build-agency-2.yml            # legacy: main → releases
-  daily.yml                     # M1: refactor → binaries-staging
+schemas/feeds.schema.json       # JSON Schema (draft-2020) for outputs/feeds.json
+src/pipeline/
+  build-all.js                  # orchestrator (npm run pipeline)
+  resolve-feeds.js              # countries.json + Transitous → feed list
+  fetch-gtfs.js                 # build local or fetch upstream
+  derive-bbox.js                # zip → bbox + agencies + validity
+  make-sqlite.js                # M2 stub
+  make-app-registry.js          # → outputs/feeds.json (Ajv-validated)
+  _smoke.js                     # local end-to-end check (no CI)
+feeds/ctp-cluj/                 # the ONLY custom-built feed
+  build.js                      # CSV enhance of CLUJ.zip
+  config.json                   # CSV URL pattern, service IDs, ...
+  lib/{csv,seed}.js             # parsers/loaders
+.github/workflows/daily.yml     # cron 00:30 UTC → binaries-staging
 ```
 
 ## Local development
@@ -78,6 +86,5 @@ See [DEVELOPMENT.md](DEVELOPMENT.md).
 
 ## License
 
-Schedule data © CTP Cluj-Napoca. Generated for public transit information
-purposes.
+Schedule data © CTP Cluj-Napoca. Generated for public transit information purposes.
 

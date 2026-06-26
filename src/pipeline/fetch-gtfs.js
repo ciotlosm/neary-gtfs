@@ -12,7 +12,7 @@
  */
 
 import { spawnSync } from 'node:child_process';
-import { copyFileSync, mkdirSync, readFileSync, statSync, writeFileSync, createWriteStream } from 'node:fs';
+import { createWriteStream, mkdirSync, readFileSync, statSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
@@ -46,24 +46,21 @@ async function fetchToFile(url, dest) {
 }
 
 /**
- * Build the ctp-cluj GTFS by invoking the legacy build script.
- * Until M2 this stays at src/build.js with its current Tranzy-registry
- * dependency. The build's output zip lives at output/agency-2/agency-2-gtfs.zip
- * which we copy into outputs/feeds/ctp-cluj.gtfs.zip.
+ * Build the ctp-cluj GTFS by invoking our feed-local build script.
+ * The new build (feeds/ctp-cluj/build.js) seeds from external.gtfs.ro's
+ * CLUJ.zip and replaces calendar/trips/stop_times with fresh CTP CSV data.
+ * No Tranzy dependency.
  */
 function buildCtpCluj() {
-  const result = spawnSync('node', ['src/build.js', '--agency', '2'], {
+  const result = spawnSync('node', ['feeds/ctp-cluj/build.js'], {
     cwd: ROOT,
     stdio: 'inherit',
   });
   if (result.status !== 0) {
     throw new Error(`ctp-cluj build failed (exit code ${result.status})`);
   }
-  const src = join(ROOT, 'output', 'agency-2', 'agency-2-gtfs.zip');
-  const dest = join(OUTPUTS, 'ctp-cluj.gtfs.zip');
-  mkdirSync(OUTPUTS, { recursive: true });
-  copyFileSync(src, dest);
-  return dest;
+  // feeds/ctp-cluj/build.js writes directly to outputs/feeds/ctp-cluj.gtfs.zip
+  return join(OUTPUTS, 'ctp-cluj.gtfs.zip');
 }
 
 /**
