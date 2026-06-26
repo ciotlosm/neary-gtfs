@@ -77,20 +77,27 @@ async function fetchCsv(routeShortName, serviceKey) {
     const res = await fetch(url, {
       signal: AbortSignal.timeout(15000),
       headers: {
-        // ctpcj.ro's WAF rejects requests with non-browser-typical
-        // headers (returns 415 on GitHub Actions runners). Send a
-        // browser-like Accept set to bypass that rule. UA stays custom
-        // so we're identifiable in their logs.
-        'User-Agent': 'neary-gtfs/2.0 (https://github.com/ciotlosm/neary-gtfs)',
+        // ctpcj.ro's WAF treats Node's undici defaults as suspicious.
+        // Mimicking a real browser bypasses both the 415 and the silent
+        // challenge-page-with-200 fallback. Tested headers as of 2026-06.
+        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'Accept': 'text/csv,text/plain,*/*;q=0.8',
         'Accept-Language': 'ro-RO,ro;q=0.9,en;q=0.8',
+        'Referer': 'https://ctpcj.ro/index.php/ro/orare-linii/linii-urbane',
       },
     });
     if (!res.ok) {
       if (res.status !== 404) LOG(`  ⚠ ${routeShortName}_${serviceKey}: HTTP ${res.status}`);
       return null;
     }
-    return await res.text();
+    const body = await res.text();
+    // Sanity check: real CSV always starts with "route_long_name,". Anything
+    // else (WAF challenge page, captcha HTML, etc.) is a soft failure.
+    if (!body.startsWith('route_long_name,')) {
+      LOG(`  ⚠ ${routeShortName}_${serviceKey}: not CSV (got ${body.length}B starting "${body.slice(0, 40).replace(/\s+/g, ' ')}…")`);
+      return null;
+    }
+    return body;
   } catch (err) {
     LOG(`  ⚠ ${routeShortName}_${serviceKey}: ${err.message || err}`);
     return null;
