@@ -20,6 +20,8 @@ import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { resolveRealtimeForName } from './lib/mdb-rt.js';
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
 const FEEDS_DIR = join(ROOT, 'feeds');
@@ -66,7 +68,7 @@ function defaultSlug(name) {
  * Build a feed object from a Transitous source, optionally promoted to
  * a local enhancement build.
  */
-function projectFeed(iso, raw, enhancer) {
+function projectFeed(iso, raw, enhancer, mdbRealtime) {
   if (!raw.name) return { skip: 'missing name' };
   if (!['http', 'transitland-atlas', 'mobility-database'].includes(raw.type)) {
     return { skip: `unsupported source type: ${raw.type}` };
@@ -80,7 +82,7 @@ function projectFeed(iso, raw, enhancer) {
     region: null,
     timezone: null,
     languages: [],
-    realtime: null,
+    realtime: mdbRealtime,
     tranzy: null,
     license: {
       spdx_identifier: raw.license?.['spdx-identifier'] ?? null,
@@ -90,9 +92,6 @@ function projectFeed(iso, raw, enhancer) {
   };
 
   if (enhancer) {
-    // Local enhancement layer overlays the Transitous metadata. The
-    // enhancer only needs to declare what it changes; everything else
-    // (name, country, license.spdx_identifier, ...) falls through.
     const c = enhancer.cfg;
     return {
       feed: {
@@ -107,15 +106,17 @@ function projectFeed(iso, raw, enhancer) {
           publisher: 'neary-gtfs',
           upstream_url: `https://api.transitous.org/gtfs/${iso.toLowerCase()}_${encodeURIComponent(raw.name)}.gtfs.zip`,
         },
-        agencies: [], // derive-bbox re-reads agency.txt from the built zip
-        realtime: c.realtime ?? null,
+        agencies: [],
+        // Config-supplied realtime overrides MDB-discovered URLs.
+        // This is the escape hatch for feeds whose RT URLs aren't in MDB
+        // or where we need to point at a proxy/cached endpoint.
+        realtime: c.realtime ?? mdbRealtime,
         tranzy: c.tranzy ?? null,
         license: {
           spdx_identifier: c.license?.spdx_identifier ?? transitousFallback.license.spdx_identifier,
           attribution_text: c.license?.attribution_text ?? transitousFallback.license.attribution_text,
           attribution_url: c.license?.attribution_url ?? transitousFallback.license.attribution_url,
         },
-        // pipeline-internal: tells fetch-gtfs to seed the build from Transitous
         _enhances: { iso, transitousName: raw.name, feedDir: enhancer.dir },
       },
     };
@@ -157,15 +158,16 @@ export async function resolveFeeds() {
     const sources = Array.isArray(payload.sources) ? payload.sources : [];
     for (const raw of sources) {
       if (!includeWhitelist.has(raw.name)) continue;
+      // RT siblings are consumed by resolveRealtimeForName below, not
+      // emitted as standalone feeds.
+      if (raw.spec === 'gtfs-rt') continue;
       const enhancer = enhancers.get(raw.name);
-      const projected = projectFeed(iso, raw, enhancer);
+      const mdbRealtime = await resolveRealtimeForName(sources, raw.name);
+      const projected = projectFeed(iso, raw, enhancer, mdbRealtime);
       if (projected.skip) {
         console.warn(`[resolve-feeds] ${iso}/${raw.name}: skipped (${projected.skip})`);
         continue;
       }
-      // include[] may match the same name multiple times (e.g. Bucuresti-Ilfov
-      // has 4 mdb-id entries) — Transitous serves the same canonical URL
-      // for all, so emit once.
       if (seenIds.has(projected.feed.id)) continue;
       seenIds.add(projected.feed.id);
       if (enhancer) matchedEnhancers.add(raw.name);
