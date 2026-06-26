@@ -53,6 +53,7 @@ function loadLocalFeeds() {
       // from the generated zip and that takes precedence (make-app-registry.js).
       agencies: [],
       realtime: cfg.realtime ?? null,
+      tranzy: cfg.tranzy ?? null,
       license: cfg.license,
     });
   }

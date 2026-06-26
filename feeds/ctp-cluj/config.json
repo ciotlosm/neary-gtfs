@@ -10,6 +10,9 @@
     "trip_updates": "https://cluj-rt-feed.gtfs.ro/tripUpdates",
     "service_alerts": "https://cluj-rt-feed.gtfs.ro/serviceAlerts"
   },
+  "tranzy": {
+    "agency_id": "2"
+  },
   "license": {
     "spdx_identifier": "CC-BY-SA-4.0",
     "attribution_text": "© Compania de Transport Public Cluj-Napoca",
