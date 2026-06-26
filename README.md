@@ -10,48 +10,34 @@ querying, and publishes one app-facing `feeds.json` registry.
 
 ## How it layers
 
-```
-              ┌──────────────────────────────────────────────┐
-              │ public-transport/transitous/feeds/ro.json    │
-              │ (community-curated source-of-truth catalog)  │
-              └────────────────┬─────────────────────────────┘
-                               │
-              ┌────────────────▼─────────────────────────────┐
-              │ countries.json: { countries, include[] }     │
-              │   ↳ pick which Transitous sources we publish │
-              └────────────────┬─────────────────────────────┘
-                               │
-        ┌──────────────────────┴────────────────────────────┐
-        │                                                   │
-        ▼ enhance (feeds/<id>/build.js exists)              ▼ mirror (no enhancer)
-┌────────────────────┐    ┌───────────────────────┐    ┌────────────────────────┐
-│ Transitous zip     │    │ ctpcj.ro CSV scrape   │    │ Transitous zip         │
-│ (Cluj-Napoca,      │───▶│ → cluj-napoca/        │    │ (Bucuresti-Ilfov, …)   │
-│  validated by MD)  │    │   build.js            │    │                        │
-└────────────────────┘    │ → fresh trips/        │    │                        │
-                          │   stop_times/calendar │    │                        │
-                          └─────────┬─────────────┘    └────────────┬───────────┘
-                                    │                                │
-                              ┌─────▼────────────────────────────────▼─────┐
-                              │ make-sqlite.js (gzipped SQLite blob)       │
-                              │ + derive-bbox + validate (built only)      │
-                              └──────────────────┬─────────────────────────┘
-                                                 │
-              ┌──────────────────────────────────▼───────────────────────────┐
-              │ outputs/feeds.json + outputs/feeds/*.sqlite3.gz              │
-              │ (RT URLs auto-resolved via MobilityData catalog)             │
-              └──────────────────────────────────┬───────────────────────────┘
-                                                 │
-                       push to `binaries` branch ▼
-              https://cdn.jsdelivr.net/gh/ciotlosm/neary-gtfs@binaries/...
-                                                 │
-                                                 ▼
-                            neary v2 PWA (downloads .sqlite3.gz into OPFS)
+```mermaid
+flowchart TD
+    A["public-transport/transitous<br/><i>feeds/ro.json</i><br/>(community-curated catalog)"]
+    B["countries.json<br/><i>{ countries, include[] }</i>"]
+    A --> B
+
+    B -->|"each include[]<br/>name"| C{"local enhancer<br/>under feeds/?"}
+
+    C -->|"yes (cluj-napoca)"| D["fetch Transitous seed<br/><i>api.transitous.org/gtfs/...</i>"]
+    D --> E["feeds/cluj-napoca/build.js<br/>scrape ctpcj.ro CSV<br/>regenerate trips / stop_times / calendar"]
+
+    C -->|"no (bucuresti-ilfov, ...)"| F["fetch Transitous mirror<br/><i>api.transitous.org/gtfs/...</i><br/>(skip if upstream ETag unchanged)"]
+
+    E --> G["make-sqlite.js<br/>+ derive-bbox + validate<br/>(skip if content_hash unchanged)"]
+    F --> G
+
+    H["MobilityData catalog<br/><i>(RT URLs per mdb-id)</i>"] -.->|"auto-resolve realtime"| I
+
+    G --> I["outputs/feeds.json<br/>+ outputs/feeds/*.sqlite3.gz"]
+
+    I -->|"push to <code>binaries</code> branch"| J["jsDelivr CDN<br/><i>cdn.jsdelivr.net/gh/ciotlosm/neary-gtfs@binaries/...</i>"]
+    J --> K["neary v2 PWA<br/>downloads .sqlite3.gz into OPFS"]
 ```
 
-Three publishers, one app-facing registry — the v2 app doesn't have to
-know any of this. It fetches `feeds.json`, picks the user's feed by GPS
-bbox, downloads one `.sqlite3.gz` blob. Done.
+Three publishers (Transitous, MobilityData, us), one app-facing
+registry — the v2 app doesn't have to know any of this. It fetches
+`feeds.json`, picks the user's feed by GPS bbox, downloads one
+`.sqlite3.gz` blob. Done.
 
 ## What it produces
 
