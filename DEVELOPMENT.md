@@ -3,10 +3,11 @@
 ## Prerequisites
 
 - Node.js 24+
-- `unzip` and `java` on PATH (CI runners have both; macOS/Linux usually do too)
+- `unzip` on PATH (every CI runner has it; macOS/Linux do too)
+- `java` on PATH (only required by the canonical GTFS validator step in CI)
 
-No API keys needed. The pipeline runs against public CTP CSV timetables
-and the public CLUJ.zip seed.
+No API keys needed — the pipeline only hits public CTP CSV timetables,
+the public CLUJ.zip seed, and `api.transitous.org`.
 
 ## Setup
 
@@ -17,68 +18,53 @@ npm install
 ## Commands
 
 ```bash
-# Full pipeline (everything → outputs/)
+# Full pipeline → outputs/
 npm run pipeline
 
-# Just the Cluj feed build (outputs/feeds/ctp-cluj.gtfs.zip)
+# Just the Cluj feed build → outputs/feeds/ctp-cluj.gtfs.zip
 npm run build:ctp-cluj
 
-# Multi-feed pipeline including Transitous-mirrored feeds (M2 path)
-RESOLVE_INCLUDE_TRANSITOUS=true npm run pipeline
-
-# Local end-to-end smoke against an existing zip
+# Local end-to-end smoke against an existing zip at
+# outputs/feeds/ctp-cluj.gtfs.zip (skips fetch + build steps)
 node src/pipeline/_smoke.js
 ```
 
-## Pipeline anatomy
+Pipeline anatomy lives in [README.md](README.md#pipeline) — no need to
+duplicate the diagram here.
 
-```
-src/pipeline/build-all.js
-  ├─ resolve-feeds.js   ← countries.json + Transitous ro.json
-  ├─ for each feed:
-  │   ├─ fetch-gtfs.js  ← build local (ctp-cluj) or fetch upstream
-  │   ├─ derive-bbox.js ← unzip -p → stops.txt + agency.txt + feed_info.txt
-  │   └─ make-sqlite.js ← M2 stub
-  └─ make-app-registry.js → outputs/feeds.json (Ajv-validated)
-```
+## Adding a feed
 
-`feeds/ctp-cluj/build.js` is invoked by `fetch-gtfs.js`. It seeds from
-the public `external.gtfs.ro/cluj/CLUJ.zip` (no API key, no Tranzy),
-scrapes ctpcj.ro CSV schedules, and emits the enhanced zip directly to
-`outputs/feeds/ctp-cluj.gtfs.zip`.
+Mirror an existing Transitous source (preferred):
 
-## Outputs
+1. Add the country's ISO code to `countries.json` `countries[]` (if not
+   already present).
+2. Find the Transitous source name at
+   `https://raw.githubusercontent.com/public-transport/transitous/main/feeds/<iso>.json`.
+   The `name` field must resolve to
+   `https://api.transitous.org/gtfs/<iso>_<name>.gtfs.zip` (200 OK).
+3. Add that name to `countries.json` `include[]`.
+4. Run `npm run pipeline` locally. Confirm
+   `outputs/feeds.json` validates and the per-feed `.sqlite3.gz` opens
+   in `sqlite3` (`sqlite3 outputs/feeds/<id>.sqlite3 'SELECT COUNT(*) FROM trips'`).
+5. Push to a branch and run the daily workflow via `workflow_dispatch`.
 
-```
-outputs/
-├── feeds.json
-└── feeds/
-    └── ctp-cluj.gtfs.zip   (+ .sqlite3.gz once M2 lands)
-```
-
-## CI
-
-`.github/workflows/daily.yml` runs nightly (00:30 UTC), targeting the
-`binaries-staging` branch. After M2 stabilizes, the branch is promoted
-to `binaries` and consumed by the v2 PWA.
+Local-build feed (only if Transitous coverage is unacceptable):
+copy the `feeds/ctp-cluj/` layout, wire it into `fetch-gtfs.js`. Avoid
+unless really necessary — Transitous gets free mdb-2121-style updates
+across ~100 downstream consumers.
 
 ## CTP CSV schedule source
 
-CTP publishes CSV files at `https://ctpcj.ro/orare/csv/orar_<route>_<service>.csv`
+CTP publishes CSV files at `https://ctpcj.ro/orare/csv/orar_<route>_<service>.csv`.
 - Service IDs: `lv` (weekday), `s` (Saturday), `d` (Sunday)
-- Headers in [`feeds/ctp-cluj/config.json`](feeds/ctp-cluj/config.json)
-- Build skips routes without CSV data (logged); the seed retains their
-  structural metadata (route + stops + shapes), only the schedule is
-  missing — handled by the v2 app as a regular GTFS feed with sparse
-  service coverage on those route_ids.
+- URL pattern + service mapping in [`feeds/ctp-cluj/config.json`](feeds/ctp-cluj/config.json)
+- Routes without CSV data are skipped (logged); their structural data
+  (route + stops + shapes) is preserved from the seed zip — the v2 app
+  treats them as sparse-schedule feeds, not missing.
 
-## Adding a new agency (M2+ scope)
+## CI
 
-1. Add the country's ISO code to `countries.json`.
-2. Verify `https://raw.githubusercontent.com/public-transport/transitous/main/feeds/<iso>.json`
-   contains a usable `type: http | transitland-atlas | mobility-database`
-   entry for the agency.
-3. Run `RESOLVE_INCLUDE_TRANSITOUS=true npm run pipeline` locally; check
-   `outputs/feeds.json` validates and the per-feed `.gtfs.zip` is sane.
-4. Push to `binaries-staging`. Validate via the v2 app pointed at staging.
-
+`.github/workflows/daily.yml` runs nightly (00:30 UTC) and on
+`workflow_dispatch`, targeting the `binaries-staging` branch. Once
+end-to-end CI is verified, the publish target is renamed to `binaries`
+(one-line edit) and jsDelivr is fronted onto raw GitHub URLs.
