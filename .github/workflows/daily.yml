@@ -1,18 +1,8 @@
-name: "Daily multi-feed pipeline (M1: binaries-staging)"
+name: "Daily multi-feed pipeline → binaries"
 
-# M1 publishes to `binaries-staging` only — `binaries` remains
-# untouched until M2 when the cutover is ready.
-#
-# Triggers:
-#   - cron 00:30 UTC (after Transitous's ~00:00 UTC daily import)
-#   - manual workflow_dispatch
-#
-# Notes:
-#   - On the `refactor/feeds-from-transitous` branch the cron does NOT
-#     fire (GitHub only runs crons from the repo's default branch).
-#     Use workflow_dispatch from this branch during M1 testing.
-#   - The legacy build-agency-2.yml workflow remains on `main` and
-#     keeps producing the `releases` branch artifacts for the v1 app.
+# Builds outputs/ and pushes to the `binaries` branch on success.
+# Triggers: cron 00:30 UTC (after Transitous's ~00:00 UTC daily import)
+# + manual workflow_dispatch.
 
 on:
   schedule:
@@ -25,6 +15,8 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      PUBLISH_BRANCH: binaries
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -42,46 +34,61 @@ jobs:
         run: node src/pipeline/build-all.js
         env:
           STRICT: 'true'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Validate ctp-cluj GTFS (canonical MobilityData validator)
-        # M1 success criterion: zero ERRORs from the canonical validator.
-        # Java validator runs as a JAR pulled from GitHub releases.
+      - name: Validate every GTFS zip (canonical MobilityData validator)
+        # Build fails on any ERROR severity from any feed.
         run: |
-          curl -sL -o /tmp/gtfs-validator.jar \
-            https://github.com/MobilityData/gtfs-validator/releases/latest/download/gtfs-validator-cli.jar
-          mkdir -p /tmp/gtfs-validator-out
-          java -jar /tmp/gtfs-validator.jar \
-            -i outputs/feeds/ctp-cluj.gtfs.zip \
-            -o /tmp/gtfs-validator-out
-          ERRORS=$(jq '[.notices[] | select(.severity=="ERROR")] | length' /tmp/gtfs-validator-out/report.json)
-          echo "Validator ERROR count: $ERRORS"
-          test "$ERRORS" -eq 0
+          VALIDATOR_URL=$(curl -sL https://api.github.com/repos/MobilityData/gtfs-validator/releases/latest \
+            | jq -r '.assets[] | select(.name | test("cli\\.jar$")) | .browser_download_url')
+          echo "Validator: $VALIDATOR_URL"
+          curl -sL -o /tmp/gtfs-validator.jar "$VALIDATOR_URL"
+          test -s /tmp/gtfs-validator.jar || { echo "::error::validator jar download failed"; exit 1; }
 
-      - name: Publish to binaries-staging
+          FAILED=0
+          for zip in outputs/feeds/*.gtfs.zip; do
+            id=$(basename "$zip" .gtfs.zip)
+            out="/tmp/gtfs-validator-out/$id"
+            mkdir -p "$out"
+            echo "::group::Validating $id"
+            java -jar /tmp/gtfs-validator.jar -i "$zip" -o "$out" >/dev/null
+            errors=$(jq '[.notices[] | select(.severity=="ERROR")] | length' "$out/report.json")
+            warnings=$(jq '[.notices[] | select(.severity=="WARNING")] | length' "$out/report.json")
+            echo "$id: ERROR=$errors WARNING=$warnings"
+            echo "::endgroup::"
+            if [ "$errors" -ne 0 ]; then
+              echo "::error::$id has $errors validator ERRORs — see report at $out/report.json"
+              jq '[.notices[] | select(.severity=="ERROR")][:3]' "$out/report.json"
+              FAILED=1
+            fi
+          done
+          exit $FAILED
+
+      - name: Publish to ${{ env.PUBLISH_BRANCH }}
         run: |
           DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)
-          git clone --single-branch --branch binaries-staging --depth 1 \
-            "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git" \
-            /tmp/binaries-staging 2>/dev/null \
-          || {
-            # First-ever build: branch doesn't exist; create as orphan
-            git clone --depth 1 \
-              "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git" \
-              /tmp/binaries-staging
-            cd /tmp/binaries-staging
-            git checkout --orphan binaries-staging
+          REMOTE="https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git"
+          DIR="/tmp/$PUBLISH_BRANCH"
+
+          if ! git clone --single-branch --branch "$PUBLISH_BRANCH" --depth 1 "$REMOTE" "$DIR" 2>/dev/null; then
+            # First-ever build for this branch: create as orphan.
+            git clone --depth 1 "$REMOTE" "$DIR"
+            cd "$DIR"
+            git checkout --orphan "$PUBLISH_BRANCH"
             git rm -rf . >/dev/null
             cd -
-          }
+          fi
 
-          cp -r outputs/* /tmp/binaries-staging/
-          cd /tmp/binaries-staging
+          cp -r outputs/* "$DIR/"
+          cd "$DIR"
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -A
-          git diff --cached --quiet && echo "no changes" || {
+          if git diff --cached --quiet; then
+            echo "no changes to publish"
+          else
             git commit -m "pipeline: $DATE"
-            git push origin binaries-staging
-          }
+            git push origin "$PUBLISH_BRANCH"
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
