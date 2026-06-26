@@ -1,20 +1,12 @@
 /**
- * Seed loader: fetches CLUJ.zip from external.gtfs.ro, extracts to a temp dir,
- * and parses the standard GTFS .txt files into the same in-memory shapes the
+ * Seed loader: takes either an absolute path to a pre-fetched GTFS zip
+ * (the pipeline hands us the Transitous-resolved Cluj-Napoca zip via
+ * `NEARY_SEED_ZIP`) or a URL it will download. Extracts to a temp dir
+ * and parses the standard GTFS .txt files into the in-memory shapes the
  * Cluj enhancement build expects.
- *
- * Returns:
- *   {
- *     seedDir,                // absolute path to extracted .txt files
- *     agencyTxt: string,      // raw agency.txt content (passed through)
- *     routes:  [{ routeId, shortName, longName, type, color }],
- *     stops:   [{ stopId, name, lat, lon }],
- *     trips:   [{ tripId, routeId, directionId, headsign, shapeId, serviceId }],
- *     stopTimes: Map<tripId, [{ stopId, sequence }]>,  // sorted by sequence
- *   }
  */
 
-import { mkdtempSync, readFileSync, writeFileSync, statSync } from 'node:fs';
+import { copyFileSync, mkdtempSync, readFileSync, writeFileSync, statSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -34,12 +26,20 @@ async function fetchToFile(url, dest) {
   return dest;
 }
 
-export async function loadSeed(zipUrl) {
+/**
+ * @param {string} source  absolute file path OR http(s) URL
+ */
+export async function loadSeed(source) {
   const seedDir = mkdtempSync(join(tmpdir(), 'neary-ctp-seed-'));
   const zipPath = join(seedDir, 'seed.zip');
 
-  console.log(`[seed] fetching ${zipUrl}`);
-  await fetchToFile(zipUrl, zipPath);
+  if (source.startsWith('http://') || source.startsWith('https://')) {
+    console.log(`[seed] fetching ${source}`);
+    await fetchToFile(source, zipPath);
+  } else {
+    console.log(`[seed] using local ${source}`);
+    copyFileSync(source, zipPath);
+  }
   console.log(`[seed] zip size: ${(statSync(zipPath).size / 1024).toFixed(1)} KB`);
 
   // Extract everything to seedDir (flat — GTFS zips don't have subdirectories)

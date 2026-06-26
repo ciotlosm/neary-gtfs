@@ -13,7 +13,7 @@
  */
 
 import { spawnSync } from 'node:child_process';
-import { createWriteStream, mkdirSync, readFileSync, statSync } from 'node:fs';
+import { createWriteStream, existsSync, mkdirSync, readFileSync, statSync, unlinkSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
@@ -45,13 +45,19 @@ async function fetchToFile(url, dest) {
   await new Promise((r) => ws.end(r));
 }
 
-function runLocalBuild(feedId) {
-  const cfg = JSON.parse(readFileSync(join(ROOT, 'feeds', feedId, 'config.json'), 'utf8'));
+function runLocalBuild(feed) {
+  const feedDir = feed._enhances?.feedDir;
+  if (!feedDir) throw new Error(`feed ${feed.id}: source.type=build but no _enhances.feedDir`);
+  const cfg = JSON.parse(readFileSync(join(ROOT, 'feeds', feedDir, 'config.json'), 'utf8'));
   const script = cfg.build?.script ?? 'build.js';
-  const rel = join('feeds', feedId, script);
-  console.log(`[fetch-gtfs] ${feedId} ← node ${rel}`);
-  const r = spawnSync('node', [rel], { cwd: ROOT, stdio: 'inherit' });
-  if (r.status !== 0) throw new Error(`local build for ${feedId} failed (exit ${r.status})`);
+  const rel = join('feeds', feedDir, script);
+
+  const env = { ...process.env };
+  if (feed._seedZipPath) env.NEARY_SEED_ZIP = feed._seedZipPath;
+
+  console.log(`[fetch-gtfs] ${feed.id} ← node ${rel}${env.NEARY_SEED_ZIP ? ` (seed: ${env.NEARY_SEED_ZIP})` : ''}`);
+  const r = spawnSync('node', [rel], { cwd: ROOT, stdio: 'inherit', env });
+  if (r.status !== 0) throw new Error(`local build for ${feed.id} failed (exit ${r.status})`);
 }
 
 /**
@@ -63,11 +69,20 @@ export async function fetchGtfs(feed) {
   const dest = join(OUTPUTS, `${feed.id}.gtfs.zip`);
 
   if (feed.source.type === 'build') {
-    runLocalBuild(feed.id);
+    // Enhanced build: fetch the Transitous seed first, hand its path
+    // to the build script via NEARY_SEED_ZIP.
+    if (feed._enhances) {
+      const { iso, transitousName } = feed._enhances;
+      const seedUrl = `${TRANSITOUS_GTFS_BASE}/${iso.toLowerCase()}_${encodeURIComponent(transitousName)}.gtfs.zip`;
+      const seedDest = join(OUTPUTS, `${feed.id}.seed.gtfs.zip`);
+      console.log(`[fetch-gtfs] ${feed.id} seed ← ${seedUrl}`);
+      await fetchToFile(seedUrl, seedDest);
+      feed._seedZipPath = seedDest;
+    }
+    runLocalBuild(feed);
+    // Clean up the seed (build script has consumed it)
+    if (feed._seedZipPath && existsSync(feed._seedZipPath)) unlinkSync(feed._seedZipPath);
   } else if (feed.source.type === 'transitous') {
-    // Transitous's published GTFS zips follow the pattern
-    //   https://api.transitous.org/gtfs/<iso>_<source-name>.gtfs.zip
-    // (the iso prefix is required; without it the endpoint 404s).
     const isoLower = (feed.country || '').toLowerCase();
     const upstream = `${TRANSITOUS_GTFS_BASE}/${isoLower}_${encodeURIComponent(feed.name)}.gtfs.zip`;
     console.log(`[fetch-gtfs] ${feed.id} ← ${upstream}`);

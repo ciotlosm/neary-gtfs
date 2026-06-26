@@ -1,5 +1,6 @@
 {
   "id": "ctp-cluj",
+  "enhances": "Cluj-Napoca",
   "name": "Cluj-Napoca",
   "country": "RO",
   "region": "Cluj",
@@ -20,10 +21,9 @@
   },
   "build": {
     "script": "build.js",
-    "seedZipUrl": "https://external.gtfs.ro/cluj/CLUJ.zip",
     "csvUrlPattern": "https://ctpcj.ro/orare/csv/orar_{routeShortName}_{serviceId}.csv",
     "serviceKeys": ["lv", "s", "d"],
     "serviceIdMap": { "lv": "LV", "s": "S", "d": "D" },
-    "notes": "Seeded from external.gtfs.ro's CLUJ.zip (mdb-2121 mirror; route/stop/shape structure stable, schedule stale by months). Build REPLACES calendar/trips/stop_times.txt with fresh data scraped daily from ctpcj.ro CSV timetables, then re-packs the zip. Routes without CSV data are skipped; their structural metadata (route + stops + shapes) is preserved from the seed pass-through."
+    "notes": "Build receives the Transitous-resolved Cluj-Napoca zip as seed (path passed via NEARY_SEED_ZIP env var by the pipeline). REPLACES calendar/trips/stop_times.txt with fresh data scraped daily from ctpcj.ro CSV timetables; keeps agency/routes/stops/shapes.txt from the seed pass-through. Routes without CSV data are skipped; their structural metadata is preserved."
   }
 }

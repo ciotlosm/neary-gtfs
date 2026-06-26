@@ -42,13 +42,20 @@ const buildCfg = config.build;
 
 const LOG = (msg) => console.log(`[ctp-cluj] ${msg}`);
 
-LOG(`Building CTP Cluj GTFS — seed: ${buildCfg.seedZipUrl}`);
+// The pipeline (fetch-gtfs.js) downloads the Transitous-resolved
+// Cluj-Napoca zip and passes its path here via NEARY_SEED_ZIP. When
+// running the build standalone for local testing, fall back to
+// downloading Transitous directly.
+const seedSource =
+  process.env.NEARY_SEED_ZIP ?? 'https://api.transitous.org/gtfs/ro_Cluj-Napoca.gtfs.zip';
+
+LOG(`Building CTP Cluj GTFS — seed: ${seedSource}`);
 
 // ──────────────────────────────────────────────────────────────────────────
 // Step 1: seed
 // ──────────────────────────────────────────────────────────────────────────
 
-const seed = await loadSeed(buildCfg.seedZipUrl);
+const seed = await loadSeed(seedSource);
 
 // stop_id → {lat, lon} for distance interpolation
 const stopCoords = new Map(seed.stops.map((s) => [s.stopId, { lat: s.lat, lon: s.lon }]));

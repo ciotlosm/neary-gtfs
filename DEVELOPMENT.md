@@ -34,43 +34,43 @@ duplicate the diagram here.
 
 ## Adding a feed
 
-Two paths, depending on whether you want a Transitous mirror or your own
-custom build.
+Single source of truth: `countries.json` `include[]`. Whether the result
+is a plain mirror or a locally-enhanced build depends only on whether
+a `feeds/<id>/config.json` declares `enhances: "<name>"` matching the
+include entry.
 
-### Mirror an existing Transitous source (preferred)
+### Plain mirror
 
 1. Add the country's ISO code to `countries.json` `countries[]` (if not
    already present).
 2. Find the Transitous source name at
    `https://raw.githubusercontent.com/public-transport/transitous/main/feeds/<iso>.json`.
-   The `name` field must resolve to
-   `https://api.transitous.org/gtfs/<iso>_<name>.gtfs.zip` (200 OK).
-3. Add that name to `countries.json` `include[]`.
-4. Run `npm run pipeline` locally; confirm `outputs/feeds.json` validates
-   and the per-feed `.sqlite3.gz` opens
+   Confirm `https://api.transitous.org/gtfs/<iso>_<name>.gtfs.zip` returns 200.
+3. Add the name to `countries.json` `include[]`.
+4. Run `npm run pipeline` locally; confirm `outputs/feeds.json`
+   validates and the per-feed `.sqlite3.gz` opens
    (`sqlite3 outputs/feeds/<id>.sqlite3 'SELECT COUNT(*) FROM trips'`).
-5. Push to a branch and trigger the daily workflow via `workflow_dispatch`.
 
-### Custom build (only when Transitous coverage is unacceptable)
+### Locally-enhanced build
 
-Local feeds are auto-discovered — drop a new directory under `feeds/`
-with a `config.json` and a `build.js` and the pipeline picks it up. No
-edits to JS in `src/pipeline/`.
+Use only when the upstream feed needs day-of fixes Transitous doesn't
+apply (CTP Cluj's case: fresh CSV schedules vs months-stale mdb-2121).
 
-1. `mkdir feeds/<your-id> && cd feeds/<your-id>`
-2. Write `config.json` (use [`feeds/ctp-cluj/config.json`](feeds/ctp-cluj/config.json)
-   as the shape reference). Required keys at the top level:
-   `id`, `name`, `country`, `timezone`, `license`. Optional:
-   `region`, `languages`, `realtime`. Anything under `build.*` is
-   passed only to your `build.js` (script name defaults to `build.js`,
-   override via `build.script`).
-3. Write `build.js` — its only contract is: write a valid GTFS zip to
-   `outputs/feeds/<id>.gtfs.zip`. Use [`feeds/ctp-cluj/build.js`](feeds/ctp-cluj/build.js)
-   as a starting point if you need a CSV-enhancement pattern.
-4. Run `npm run pipeline` locally.
+1. Do step 1–3 above so the Transitous source is in `include[]`.
+2. `mkdir feeds/<your-id>` (the dir name is yours; it becomes the
+   feed id in `feeds.json` unless `config.json` overrides via `id`).
+3. Write `feeds/<your-id>/config.json` (see [`feeds/ctp-cluj/config.json`](feeds/ctp-cluj/config.json)).
+   Required at top level: `enhances: "<TransitousName>"`, plus
+   `name`, `country`, `timezone`, `license`. Optional: `region`,
+   `languages`, `realtime`, `tranzy`.
+4. Write `feeds/<your-id>/build.js`. The pipeline runs it with
+   `NEARY_SEED_ZIP=<absolute path to the Transitous seed zip>` in the
+   environment. The script must write the final GTFS to
+   `outputs/feeds/<id>.gtfs.zip`.
 
-Avoid the custom path when possible — Transitous gets free
-mdb-2121-style updates and reaches ~100 downstream consumers.
+Orphan enhancers (a `feeds/<id>/` whose `enhances` doesn't match any
+include entry) print a warning and produce nothing. Always-mirrored
+sources (in `include[]` but no enhancer) are the default case.
 
 ## CTP CSV schedule source
 

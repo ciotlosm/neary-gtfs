@@ -1,22 +1,19 @@
 /**
  * resolve-feeds.js — produce the ordered list of feeds this run will build.
  *
- * Two sources:
+ * Single source of truth: `countries.json`'s `include[]` lists Transitous
+ * source names to publish. Each entry becomes either:
  *
- *   1. **Local feeds** — each subdirectory of `feeds/` with a `config.json`
- *      is a feed we build ourselves. Auto-discovered (no JS edits needed
- *      to add another local feed). `config.json` must declare at least
- *      `id`, `name`, `country`, plus a `build` block consumed by the
- *      feed's own `build.js` (see feeds/ctp-cluj/config.json for shape).
+ *   - a **plain mirror** of Transitous's resolved zip (default), OR
+ *   - an **enhanced build** if a `feeds/<id>/config.json` declares
+ *     `enhances: "<TransitousName>"`. The Transitous zip is fetched and
+ *     passed to the feed's `build.js` as the seed; the script mutates it
+ *     and writes the final `outputs/feeds/<id>.gtfs.zip`.
  *
- *   2. **Transitous mirrors** — for each ISO code in `countries.json`,
- *      fetch `feeds/<iso>.json` from public-transport/transitous@main and
- *      mirror the entries whose `name` appears in `countries.json`'s
- *      `include[]` whitelist. Their .zip comes from
- *      `api.transitous.org/gtfs/<iso>_<name>.gtfs.zip`.
- *
- * Local feeds are emitted before Transitous mirrors so they appear first
- * in `outputs/feeds.json` (UX nicety; the app picks by GPS bbox anyway).
+ * Local feed dirs without an `enhances` value (or whose `enhances`
+ * doesn't match anything in `include[]`) are warned about and skipped —
+ * the model is: include[] decides what to publish, feeds/<id>/ decides
+ * how to enhance.
  */
 
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
@@ -30,38 +27,26 @@ const FEEDS_DIR = join(ROOT, 'feeds');
 const TRANSITOUS_RAW = 'https://raw.githubusercontent.com/public-transport/transitous/main/feeds';
 
 // ───────────────────────────────────────────────────────────────────────────
-// Local feeds (auto-discovered from feeds/<id>/config.json)
+// Local enhancement layers (auto-discovered from feeds/<id>/config.json)
 // ───────────────────────────────────────────────────────────────────────────
 
-function loadLocalFeeds() {
-  if (!existsSync(FEEDS_DIR)) return [];
-  const out = [];
+function loadEnhancers() {
+  if (!existsSync(FEEDS_DIR)) return new Map();
+  const byTransitousName = new Map();
   for (const entry of readdirSync(FEEDS_DIR, { withFileTypes: true })) {
     if (!entry.isDirectory()) continue;
     const cfgPath = join(FEEDS_DIR, entry.name, 'config.json');
     if (!existsSync(cfgPath)) continue;
     const cfg = JSON.parse(readFileSync(cfgPath, 'utf8'));
-    out.push({
-      id: cfg.id ?? entry.name,
-      name: cfg.name,
-      country: cfg.country,
-      region: cfg.region ?? null,
-      timezone: cfg.timezone ?? null,
-      languages: cfg.languages ?? [],
-      source: { type: 'build', publisher: 'neary-gtfs', upstream_url: null },
-      // agencies[] is intentionally empty — derive-bbox re-reads agency.txt
-      // from the generated zip and that takes precedence (make-app-registry.js).
-      agencies: [],
-      realtime: cfg.realtime ?? null,
-      tranzy: cfg.tranzy ?? null,
-      license: cfg.license,
-    });
+    if (!cfg.enhances) {
+      console.warn(`[resolve-feeds] feeds/${entry.name}/config.json has no 'enhances' field — skipped.`);
+      continue;
+    }
+    byTransitousName.set(cfg.enhances, { dir: entry.name, cfg });
   }
-  return out;
+  return byTransitousName;
 }
 
-// ───────────────────────────────────────────────────────────────────────────
-// Transitous mirrors (gated by countries.json include[] whitelist)
 // ───────────────────────────────────────────────────────────────────────────
 
 async function fetchTransitousCountry(iso) {
@@ -73,32 +58,73 @@ async function fetchTransitousCountry(iso) {
   return res.json();
 }
 
-function projectTransitousFeed(iso, raw) {
+function defaultSlug(name) {
+  return String(name).toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+/**
+ * Build a feed object from a Transitous source, optionally promoted to
+ * a local enhancement build.
+ */
+function projectFeed(iso, raw, enhancer) {
   if (!raw.name) return { skip: 'missing name' };
   if (!['http', 'transitland-atlas', 'mobility-database'].includes(raw.type)) {
     return { skip: `unsupported source type: ${raw.type}` };
   }
-  const id = String(raw.name).toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '');
+
+  // Common Transitous metadata
+  const transitousFallback = {
+    id: defaultSlug(raw.name),
+    name: raw.name,
+    country: iso.toUpperCase(),
+    region: null,
+    timezone: null,
+    languages: [],
+    realtime: null,
+    tranzy: null,
+    license: {
+      spdx_identifier: raw.license?.['spdx-identifier'] ?? null,
+      attribution_text: raw.license?.['attribution-text'] ?? raw.name,
+      attribution_url: raw.license?.['url'] ?? null,
+    },
+  };
+
+  if (enhancer) {
+    // Local enhancement layer takes precedence on metadata; we still
+    // record the underlying Transitous name for fetch-gtfs.
+    const c = enhancer.cfg;
+    return {
+      feed: {
+        id: c.id ?? enhancer.dir,
+        name: c.name ?? transitousFallback.name,
+        country: c.country ?? transitousFallback.country,
+        region: c.region ?? null,
+        timezone: c.timezone ?? null,
+        languages: c.languages ?? [],
+        source: {
+          type: 'build',
+          publisher: 'neary-gtfs',
+          upstream_url: `https://api.transitous.org/gtfs/${iso.toLowerCase()}_${encodeURIComponent(raw.name)}.gtfs.zip`,
+        },
+        agencies: [], // derive-bbox re-reads agency.txt from the built zip
+        realtime: c.realtime ?? null,
+        tranzy: c.tranzy ?? null,
+        license: c.license ?? transitousFallback.license,
+        // pipeline-internal: tells fetch-gtfs to seed the build from Transitous
+        _enhances: { iso, transitousName: raw.name, feedDir: enhancer.dir },
+      },
+    };
+  }
+
   return {
     feed: {
-      id,
-      name: raw.name,
-      country: iso.toUpperCase(),
-      region: null,
-      timezone: null,
-      languages: [],
+      ...transitousFallback,
       source: {
         type: 'transitous',
         publisher: `Transitous (${raw.type})`,
         upstream_url: raw.url ?? null,
       },
       agencies: [],
-      realtime: null,
-      license: {
-        spdx_identifier: raw.license?.['spdx-identifier'] ?? null,
-        attribution_text: raw.license?.['attribution-text'] ?? raw.name,
-        attribution_url: raw.license?.['url'] ?? null,
-      },
     },
   };
 }
@@ -109,10 +135,11 @@ export async function resolveFeeds() {
   const config = JSON.parse(readFileSync(join(ROOT, 'countries.json'), 'utf8'));
   const countries = config.countries ?? [];
   const includeWhitelist = new Set(config.include ?? []);
+  const enhancers = loadEnhancers();
 
-  const localFeeds = loadLocalFeeds();
-  const localIds = new Set(localFeeds.map((f) => f.id));
-  const feeds = [...localFeeds];
+  const feeds = [];
+  const seenIds = new Set();
+  const matchedEnhancers = new Set();
 
   for (const iso of countries) {
     let payload;
@@ -123,23 +150,33 @@ export async function resolveFeeds() {
       continue;
     }
     const sources = Array.isArray(payload.sources) ? payload.sources : [];
-    const seen = new Set();
     for (const raw of sources) {
       if (!includeWhitelist.has(raw.name)) continue;
-      const projected = projectTransitousFeed(iso, raw);
+      const enhancer = enhancers.get(raw.name);
+      const projected = projectFeed(iso, raw, enhancer);
       if (projected.skip) {
         console.warn(`[resolve-feeds] ${iso}/${raw.name}: skipped (${projected.skip})`);
         continue;
       }
-      // Don't double-mirror something we already build locally.
-      if (localIds.has(projected.feed.id)) continue;
-      if (seen.has(projected.feed.id)) continue;
-      seen.add(projected.feed.id);
+      // include[] may match the same name multiple times (e.g. Bucuresti-Ilfov
+      // has 4 mdb-id entries) — Transitous serves the same canonical URL
+      // for all, so emit once.
+      if (seenIds.has(projected.feed.id)) continue;
+      seenIds.add(projected.feed.id);
+      if (enhancer) matchedEnhancers.add(raw.name);
       feeds.push(projected.feed);
     }
   }
 
-  console.log(`[resolve-feeds] ${feeds.length} feed(s): ${feeds.map((f) => f.id).join(', ')}`);
+  // Warn about orphan enhancers — local dirs with enhances:X but X not in include[]
+  for (const [name, enh] of enhancers) {
+    if (!matchedEnhancers.has(name)) {
+      console.warn(`[resolve-feeds] feeds/${enh.dir}/ enhances "${name}" but that name is not in countries.json include[] — feed will not be published.`);
+    }
+  }
+
+  console.log(`[resolve-feeds] ${feeds.length} feed(s): ${feeds.map((f) => `${f.id}${f._enhances ? '*' : ''}`).join(', ')}  (* = locally enhanced)`);
   return feeds;
 }
+
 

@@ -36,17 +36,24 @@ zip and fails on any `ERROR`.
 
 `npm run pipeline` (`src/pipeline/build-all.js`):
 
-1. `resolve-feeds.js` — `countries.json` (countries + `include` whitelist)
-   + Transitous `feeds/<iso>.json` → feed list. `ctp-cluj` is always prepended.
+1. `resolve-feeds.js` — read `countries.json` `include[]` as the
+   **single source of truth** for which feeds to publish. For each
+   entry: fetch the matching source from Transitous's `feeds/<iso>.json`.
+   If a `feeds/<id>/config.json` declares `enhances: "<name>"` matching
+   that Transitous source, promote it to an enhanced build; otherwise
+   plain mirror.
 2. For each feed:
-   - `fetch-gtfs.js` — for `ctp-cluj`: invoke `feeds/ctp-cluj/build.js`;
-     for Transitous feeds: download from
-     `api.transitous.org/gtfs/<iso>_<name>.gtfs.zip`
+   - `fetch-gtfs.js`:
+     - **Plain mirror**: download
+       `api.transitous.org/gtfs/<iso>_<name>.gtfs.zip`
+     - **Enhanced build**: download the same Transitous zip as seed,
+       hand its path to `feeds/<id>/build.js` via `NEARY_SEED_ZIP`;
+       the script mutates the zip and writes the final
+       `outputs/feeds/<id>.gtfs.zip`
    - `derive-bbox.js` — `unzip -p` the zip's `stops.txt` / `agency.txt` /
      `feed_info.txt` → bbox, agencies, validity dates
-   - `make-sqlite.js` — `.zip` → `.sqlite3.gz` (gzipped SQLite blob the
-     v2 app's worker opens via OPFS-SAHPool)
-3. `make-app-registry.js` — write `outputs/feeds.json`.
+   - `make-sqlite.js` — `.zip` → `.sqlite3.gz`
+3. `make-app-registry.js` — write `outputs/feeds.json` (Ajv-validated).
 
 App consumes from:
 ```
@@ -56,13 +63,16 @@ https://raw.githubusercontent.com/ciotlosm/neary-gtfs/binaries-staging/feeds.jso
 
 ### CTP Cluj enhancement
 
-`feeds/ctp-cluj/build.js`:
-- Fetches `https://external.gtfs.ro/cluj/CLUJ.zip` (the mdb-2121 mirror) as seed
-- Keeps `agency.txt`, `routes.txt`, `stops.txt`, `shapes.txt` from seed
-- **Regenerates** `calendar.txt`, `trips.txt`, `stop_times.txt` from
-  daily CTP CSV scrapes (`ctpcj.ro/orare/csv/orar_<route>_<svc>.csv`)
-- Adds `feed_info.txt` with `feed_publisher_name="neary-gtfs"`
-- Re-zips → `outputs/feeds/ctp-cluj.gtfs.zip`
+`feeds/ctp-cluj/` declares `enhances: "Cluj-Napoca"` in its `config.json`.
+The pipeline:
+- Downloads `api.transitous.org/gtfs/ro_Cluj-Napoca.gtfs.zip` (Transitous
+  serves the mdb-2121 mirror with its spec-compliance fixes applied)
+- Hands the path to `feeds/ctp-cluj/build.js`, which:
+  - Keeps `agency.txt`, `routes.txt`, `stops.txt`, `shapes.txt` from seed
+  - **Regenerates** `calendar.txt`, `trips.txt`, `stop_times.txt` from
+    daily CTP CSV scrapes (`ctpcj.ro/orare/csv/orar_<route>_<svc>.csv`)
+  - Adds `feed_info.txt` with `feed_publisher_name="neary-gtfs"`
+  - Re-zips → `outputs/feeds/ctp-cluj.gtfs.zip`
 
 Trip IDs follow the canonical CTP format
 `<route_id>_<dir>_<service>_<seq>_<HHMM>` (e.g. `45_1_LV_9_0721`),

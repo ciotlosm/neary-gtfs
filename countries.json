@@ -1,5 +1,5 @@
 {
-  "_comment": "ISO 3166-1 alpha-2 country codes whose Transitous feeds we mirror, plus an 'include' whitelist of source names to actually publish. ctp-cluj is always included (built locally).",
+  "_comment": "Single source of truth for which feeds we publish. 'include[]' lists Transitous source names (from <iso>.json). Each becomes either a plain mirror, OR — if a feeds/<id>/config.json declares enhances:'<name>' — an enhanced build atop the Transitous zip.",
   "countries": ["ro"],
-  "include": ["Bucuresti-Ilfov"]
+  "include": ["Cluj-Napoca", "Bucuresti-Ilfov"]
 }
