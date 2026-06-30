@@ -235,6 +235,83 @@ export function resolveModalCollisions(typeTopColors, routeCountAtModal, allRout
   return skews;
 }
 
+/**
+ * Compute a perceptually distinct hex color for each network, derived
+ * from the modal route_color of routes in that network. Applies the
+ * same OKLCh collision resolution used for route_type modals so every
+ * chip reads at a distinct hue regardless of how many networks share
+ * their routes' dominant color.
+ *
+ * @param {Array} routeRows        routes.txt rows (route_id, route_color)
+ * @param {Array} routeNetworkRows route_networks.txt rows (route_id, network_id)
+ * @param {Array} networkRows      networks.txt rows (network_id)
+ * @returns {Map<string, string>}  network_id → 6-char uppercase hex (no leading #)
+ */
+export function computeNetworkColors(routeRows, routeNetworkRows, networkRows) {
+  // Build a lookup of valid route colors (normalized, non-placeholder).
+  const colorByRoute = new Map();
+  for (const r of routeRows ?? []) {
+    const c = normalizeColor(r.route_color);
+    if (c && !KNOWN_PLACEHOLDER_COLORS.has(c)) colorByRoute.set(r.route_id, c);
+  }
+
+  // Count each color's occurrences per network.
+  const countsByNetwork = new Map(); // networkId → Map<color, count>
+  for (const rn of routeNetworkRows ?? []) {
+    const color = colorByRoute.get(rn.route_id);
+    if (!color) continue;
+    if (!countsByNetwork.has(rn.network_id)) countsByNetwork.set(rn.network_id, new Map());
+    const inner = countsByNetwork.get(rn.network_id);
+    inner.set(color, (inner.get(color) ?? 0) + 1);
+  }
+
+  // Modal color per network (most frequent).
+  const modalColors = new Map(); // networkId → color
+  const countAtModal = new Map(); // networkId → count at modal
+  for (const [netId, counts] of countsByNetwork) {
+    let best = '', bestN = 0;
+    for (const [color, n] of counts) {
+      if (n > bestN) { best = color; bestN = n; }
+    }
+    if (best) { modalColors.set(netId, best); countAtModal.set(netId, bestN); }
+  }
+
+  // Seed networks with no usable route colors from the anchor.
+  for (const n of networkRows ?? []) {
+    if (!modalColors.has(n.network_id)) modalColors.set(n.network_id, ANCHOR_COLOR);
+  }
+
+  // Resolve collisions: ≥2 networks sharing the same modal get rotated.
+  const allColors = new Set(modalColors.values());
+  const byColor = new Map();
+  for (const [netId, color] of modalColors) {
+    if (!byColor.has(color)) byColor.set(color, []);
+    byColor.get(color).push(netId);
+  }
+  for (const [baseColor, group] of byColor) {
+    if (group.length < 2) continue;
+    group.sort((a, b) => (countAtModal.get(b) ?? 0) - (countAtModal.get(a) ?? 0));
+    const step = 360 / group.length;
+    const forbidden = new Set([...allColors].filter((c) => c !== baseColor));
+    for (let i = 1; i < group.length; i++) {
+      const idealDeg = i * step;
+      const candidates = [idealDeg];
+      for (let off = 15; off <= 180; off += 15) candidates.push(idealDeg + off, idealDeg - off);
+      let newColor = rotateHueOklch(baseColor, idealDeg);
+      for (const deg of candidates) {
+        const c = rotateHueOklch(baseColor, deg);
+        const minDist = [...forbidden].reduce((mn, fc) => Math.min(mn, oklabDistance(c, fc)), Infinity);
+        if (minDist >= OKLAB_DISTINCT_THRESHOLD) { newColor = c; break; }
+      }
+      modalColors.set(group[i], newColor);
+      allColors.add(newColor);
+      forbidden.add(newColor);
+    }
+  }
+
+  return modalColors; // network_id → 6-char hex (uppercase, no #)
+}
+
 // Friendly labels for the most common route_type integers. Anything not
 // listed is shown as `type=<N>` in the log lines.
 const TYPE_LABELS = {
