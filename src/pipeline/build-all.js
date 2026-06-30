@@ -79,16 +79,21 @@ async function main() {
 
     // Skip-on-unchanged: if upstream ETag is unchanged AND we already
     // shipped a sqlite_gz for this feed, pass the previous entry through.
+    // Bypassed when FORCE_REBUILD is set (use after pipeline code changes
+    // that affect output but don't touch the upstream feed).
     const prevEntry = prev.get(feed.id);
     const prevEtag = prevEntry?.source?.upstream_etag;
     const currentEtag = await fetchUpstreamEtag(feed.source.upstream_url);
-    if (prevEtag && currentEtag === prevEtag && prevEntry.files?.sqlite_gz) {
+    const forceRebuild = !!process.env.FORCE_REBUILD;
+    if (!forceRebuild && prevEtag && currentEtag === prevEtag && prevEntry.files?.sqlite_gz) {
       console.log(`[build-all] ${feed.id}: upstream unchanged (ETag ${currentEtag}) — reusing previous build`);
       entries.push({ reused: true, prevEntry });
       reused++;
       continue;
     }
-    if (prevEtag) {
+    if (forceRebuild && prevEtag && currentEtag === prevEtag) {
+      console.log(`[build-all] ${feed.id}: upstream unchanged (ETag ${currentEtag}) but FORCE_REBUILD set — rebuilding`);
+    } else if (prevEtag) {
       console.log(`[build-all] ${feed.id}: upstream changed (${prevEtag} → ${currentEtag ?? 'null'}) — rebuilding`);
     }
     feed._currentEtag = currentEtag;

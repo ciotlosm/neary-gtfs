@@ -59,6 +59,10 @@ Previous registry is fetched from
 `raw.githubusercontent.com/.../binaries/feeds.json` at the start of
 each run (always fresh, not jsDelivr-cached).
 
+Set `FORCE_REBUILD=true` (or trigger the daily workflow with `force:
+true`) to bypass the skip and rebuild every feed — use after pipeline
+code changes that affect output but don't touch the upstream feed.
+
 ## Helpers in `lib/`
 
 - `csv.js` — tiny GTFS-CSV parser (used by `derive-bbox.js` /
