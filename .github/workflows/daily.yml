@@ -91,14 +91,17 @@ jobs:
             --cache-control "public, max-age=300" \
             --content-type "application/json"
 
-          # 3. Prune orphan .sqlite3.gz objects that the new feeds.json
-          #    no longer references. Single source of truth: feeds.json
-          #    files.sqlite_gz. Never touches feeds.json itself.
-          EXPECTED=$(jq -r '.feeds[] | .files.sqlite_gz | select(.)' outputs/feeds.json | sort -u)
+          # 3. Prune EVERY orphan the new feeds.json doesn't reference.
+          #    Mandatory hygiene: after each publish the bucket must
+          #    contain only feeds.json + each referenced <id>.sqlite3.gz.
+          #    Anything else (renamed feeds, test probes, prior-schema
+          #    layouts) gets removed here so the bucket never accretes.
+          #    Single source of truth: feeds.json files.sqlite_gz.
+          EXPECTED=$(jq -r '["feeds.json"] + [.feeds[].files.sqlite_gz | select(.)] | .[]' outputs/feeds.json | sort -u)
           aws s3 ls "s3://$BUCKET/" --endpoint-url "$ENDPOINT" \
             | awk '{print $4}' \
-            | grep -E '\.sqlite3\.gz$' \
             | while read -r name; do
+                [ -z "$name" ] && continue
                 if ! printf '%s\n' "$EXPECTED" | grep -qxF "$name"; then
                   echo "[publish] pruning orphan: $name"
                   aws s3 rm "s3://$BUCKET/$name" --endpoint-url "$ENDPOINT"
