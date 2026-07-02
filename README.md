@@ -11,7 +11,7 @@ PWA actually needs to render a city:
    change-detection.
 
 > [!NOTE]
-> **Live registry**: [`https://cdn.jsdelivr.net/gh/ciotlosm/neary-gtfs@binaries/feeds.json`](https://cdn.jsdelivr.net/gh/ciotlosm/neary-gtfs@binaries/feeds.json)
+> **Live registry**: [`https://gtfs.n3ary.com/feeds.json`](https://gtfs.n3ary.com/feeds.json) (Cloudflare R2 via custom domain)
 
 The repo deliberately does **not** produce GTFS — it consumes it. Where
 the zip comes from is a per-feed detail (Transitous mirror, sister-repo
@@ -19,12 +19,13 @@ adapter, …) and lives in [`feeds/<id>/config.json`](feeds/).
 
 ## What it produces
 
-Published nightly to the `binaries` branch by
-[`.github/workflows/daily.yml`](.github/workflows/daily.yml):
+Published nightly to the `neary-gtfs` Cloudflare R2 bucket by
+[`.github/workflows/daily.yml`](.github/workflows/daily.yml), served
+via the custom domain `gtfs.n3ary.com`:
 
 ```
-binaries/feeds.json
-binaries/<id>.sqlite3.gz   ← one per feed listed in feeds.json
+https://gtfs.n3ary.com/feeds.json
+https://gtfs.n3ary.com/<id>.sqlite3.gz   ← one per feed listed in feeds.json
 ```
 
 The raw `.gtfs.zip` is not republished — its upstream URL is in
@@ -47,8 +48,8 @@ flowchart LR
     E --> F
     F --> G["validate + smoke<br/>(remote only)"]
     G --> H["derive-bbox<br/>+ make-sqlite"]
-    H --> I["feeds.json<br/>+ &lt;id&gt;.sqlite3.gz<br/>→ binaries branch"]
-    I --> J["jsDelivr → neary PWA<br/>(downloads sqlite3.gz into OPFS)"]
+    H --> I["feeds.json<br/>+ &lt;id&gt;.sqlite3.gz<br/>→ R2 bucket (gtfs.n3ary.com)"]
+    I --> J["neary PWA<br/>(downloads sqlite3.gz into OPFS)"]
 ```
 
 Two source flavors today:

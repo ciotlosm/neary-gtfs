@@ -15,7 +15,7 @@
  *   outputs/feeds.json
  *   outputs/<id>.sqlite3.gz
  *
- * Publish: .github/workflows/daily.yml pushes outputs/ to binaries.
+ * Publish: .github/workflows/daily.yml uploads outputs/ to Cloudflare R2.
  *
  * Note: the .gtfs.zip is unlinked after make-sqlite — consumers that
  * want the raw zip fetch it from the upstream URL directly.
@@ -32,7 +32,9 @@ import { UA } from './lib/http.js';
 
 import { existsSync, unlinkSync } from 'node:fs';
 
-const PREV_REGISTRY_URL = 'https://raw.githubusercontent.com/ciotlosm/neary-gtfs/binaries/feeds.json';
+const DEFAULT_PUBLIC_BASE_URL = 'https://gtfs.n3ary.com';
+const PUBLIC_BASE_URL = (process.env.R2_PUBLIC_BASE_URL ?? DEFAULT_PUBLIC_BASE_URL).replace(/\/+$/, '');
+const PREV_REGISTRY_URL = `${PUBLIC_BASE_URL}/feeds.json`;
 
 /**
  * Fetch the previously-published feeds.json from the live CDN. Returns

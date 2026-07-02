@@ -15,7 +15,7 @@ gh pr merge --squash --delete-branch
 Push to `main` (PR merge or direct) auto-triggers the pipeline via
 [`.github/workflows/daily.yml`](.github/workflows/daily.yml). Docs-only
 PRs (`**/*.md`, `.gitignore`, `LICENSE`) are excluded via `paths-ignore`
-so README edits don't churn the `binaries` branch.
+so README edits don't churn the R2 bucket.
 
 Branch protection:
 - PR required, 0 approvals (solo-dev friendly)
@@ -118,5 +118,17 @@ Orphan overrides (a `feeds/<id>/` whose `enhances` doesn't match any
 
 [`.github/workflows/daily.yml`](.github/workflows/daily.yml) runs at
 00:30 UTC, on `workflow_dispatch`, and on every push to `main`,
-targeting the `binaries` branch. The app reads from
-`https://cdn.jsdelivr.net/gh/ciotlosm/neary-gtfs@binaries/feeds.json`.
+uploading to the `neary-gtfs` Cloudflare R2 bucket. The app reads from
+`https://gtfs.n3ary.com/feeds.json`.
+
+### Publish target
+
+Secrets and variables driving the R2 upload live in repo settings:
+
+- Secrets: `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY` (R2 S3-compatible token,
+  scoped Object Read+Write on the `neary-gtfs` bucket).
+- Variables: `R2_S3_ENDPOINT`, `R2_BUCKET`, `R2_PUBLIC_BASE_URL`.
+
+Uploads set `Cache-Control: public, max-age=300` on both `feeds.json`
+and each `<id>.sqlite3.gz` — matches the previous GitHub-raw behavior
+so propagation stays bounded to ≤ 5 min per publish.

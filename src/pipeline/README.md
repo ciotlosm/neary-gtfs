@@ -1,7 +1,8 @@
 # src/pipeline
 
-The SQLite + registry build for the `binaries` branch. See
-[../../README.md](../../README.md) for what this repo is and isn't.
+The SQLite + registry build published to the Cloudflare R2 bucket at
+`gtfs.n3ary.com`. See [../../README.md](../../README.md) for what this
+repo is and isn't.
 
 ## Entry point
 
@@ -40,7 +41,7 @@ npm run pipeline            # = node src/pipeline/build-all.js
 8. **`make-app-registry.js`** — write Ajv-validated
    [`outputs/feeds.json`](../../outputs/feeds.json).
 
-Output layout under `outputs/` (mirrors the `binaries` branch root):
+Output layout under `outputs/` (mirrors the R2 bucket root):
 
 ```
 outputs/feeds.json
@@ -55,9 +56,10 @@ the ETag matches AND the previous `<id>.sqlite3.gz` is still
 referenced, the whole feed is reused from the previous registry — no
 download, no make-sqlite, no publish churn.
 
-Previous registry is fetched from
-`raw.githubusercontent.com/.../binaries/feeds.json` at the start of
-each run (always fresh, not jsDelivr-cached).
+Previous registry is fetched from `${R2_PUBLIC_BASE_URL}/feeds.json`
+(default `https://gtfs.n3ary.com/feeds.json`) at the start of each
+run, with `Cache-Control: max-age=300` on the upload side to bound
+staleness.
 
 Set `FORCE_REBUILD=true` (or trigger the daily workflow with `force:
 true`) to bypass the skip and rebuild every feed — use after pipeline

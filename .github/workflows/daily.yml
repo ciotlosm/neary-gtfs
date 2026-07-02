@@ -1,6 +1,6 @@
-name: "Daily multi-feed pipeline → binaries"
+name: "Daily multi-feed pipeline → R2"
 
-# Builds outputs/ and pushes to the `binaries` branch on success.
+# Builds outputs/ and uploads to the Cloudflare R2 bucket on success.
 # Triggers: cron 00:30 UTC (after Transitous's ~00:00 UTC daily import)
 # + manual workflow_dispatch.
 
@@ -27,7 +27,7 @@ on:
       - 'LICENSE'
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build:
@@ -50,62 +50,57 @@ jobs:
         env:
           STRICT: 'true'
           FORCE_REBUILD: ${{ inputs.force && 'true' || '' }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Pipeline reads previous feeds.json from the live public URL
+          # to derive per-feed upstream_etag for the skip-on-unchanged
+          # path. Same host it publishes to below.
+          R2_PUBLIC_BASE_URL: ${{ vars.R2_PUBLIC_BASE_URL }}
 
-      - name: Publish to binaries
+      - name: Publish to R2
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: auto
+          # R2 uses SigV4 without a specific region; "auto" is
+          # Cloudflare's convention. Payload signing must be enabled
+          # (aws-cli v2 does this by default for s3 cp).
+          ENDPOINT: ${{ vars.R2_S3_ENDPOINT }}
+          BUCKET: ${{ vars.R2_BUCKET }}
         run: |
-          DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)
-          REMOTE="https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git"
-          DIR="/tmp/binaries"
+          set -euo pipefail
 
-          if ! git clone --single-branch --branch binaries --depth 1 "$REMOTE" "$DIR" 2>/dev/null; then
-            # First-ever build for this branch: create as orphan.
-            git clone --depth 1 "$REMOTE" "$DIR"
-            cd "$DIR"
-            git checkout --orphan binaries
-            git rm -rf . >/dev/null
-            cd -
-          fi
-
-          cp -r outputs/* "$DIR/"
-          cd "$DIR"
-
-          # Migration: lift any reused .sqlite3.gz out of the legacy
-          # feeds/ subdirectory so it survives the cleanup below. (The
-          # build script's ETag-reuse path skips re-emitting these,
-          # assuming the previous publish is still around.) Skip if a
-          # fresh file already landed at root — `mv -n` in coreutils 9.2+
-          # errors when the destination exists and would kill `set -e`.
-          # Anything left in feeds/ after that is orphan from the old
-          # layout; drop the directory wholesale.
-          if [ -d feeds ]; then
-            for f in feeds/*.sqlite3.gz; do
-              [ -e "$f" ] || continue
-              dest="$(basename "$f")"
-              [ -e "$dest" ] || mv "$f" "$dest"
-            done
-            rm -rf feeds
-          fi
-
-          # Prune root-level orphans that the new feeds.json no longer
-          # references. Single source of truth: feeds.json `files.sqlite_gz`.
-          EXPECTED=$(jq -r '.feeds[] | .files.sqlite_gz | select(.)' feeds.json | sort -u)
-          for f in *.sqlite3.gz; do
-            [ -e "$f" ] || continue
-            if ! printf '%s\n' "$EXPECTED" | grep -qxF "$f"; then
-              echo "[publish] pruning orphan: $f"
-              rm -f "$f"
-            fi
+          # 1. Upload sqlite files BEFORE feeds.json.
+          #    Order matters: if the job crashes between steps, clients
+          #    keep seeing the previous feeds.json — which references
+          #    previous sqlite objects still in the bucket — rather than
+          #    a new feeds.json pointing at objects that haven't landed.
+          shopt -s nullglob
+          for f in outputs/*.sqlite3.gz; do
+            name=$(basename "$f")
+            echo "[publish] uploading $name ($(du -h "$f" | cut -f1))"
+            aws s3 cp "$f" "s3://$BUCKET/$name" \
+              --endpoint-url "$ENDPOINT" \
+              --cache-control "public, max-age=300" \
+              --content-type "application/octet-stream"
           done
 
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A
-          if git diff --cached --quiet; then
-            echo "no changes to publish"
-          else
-            git commit -m "pipeline: $DATE"
-            git push origin binaries
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # 2. Upload feeds.json last — the "commit" that flips clients
+          #    over to any new sqlite objects uploaded above.
+          echo "[publish] uploading feeds.json"
+          aws s3 cp outputs/feeds.json "s3://$BUCKET/feeds.json" \
+            --endpoint-url "$ENDPOINT" \
+            --cache-control "public, max-age=300" \
+            --content-type "application/json"
+
+          # 3. Prune orphan .sqlite3.gz objects that the new feeds.json
+          #    no longer references. Single source of truth: feeds.json
+          #    files.sqlite_gz. Never touches feeds.json itself.
+          EXPECTED=$(jq -r '.feeds[] | .files.sqlite_gz | select(.)' outputs/feeds.json | sort -u)
+          aws s3 ls "s3://$BUCKET/" --endpoint-url "$ENDPOINT" \
+            | awk '{print $4}' \
+            | grep -E '\.sqlite3\.gz$' \
+            | while read -r name; do
+                if ! printf '%s\n' "$EXPECTED" | grep -qxF "$name"; then
+                  echo "[publish] pruning orphan: $name"
+                  aws s3 rm "s3://$BUCKET/$name" --endpoint-url "$ENDPOINT"
+                fi
+              done
